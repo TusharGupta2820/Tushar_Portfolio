@@ -4,7 +4,7 @@ import { DroneTacticalMap } from '../3d/DroneTacticalMap';
 import { ArrowRight, Layers, CheckCircle, ExternalLink, Filter } from 'lucide-react';
 import { GithubIcon } from '../ui/Icons';
 import { soundFx } from '../../utils/audio';
-import { SlideIn, StaggerContainer, StaggerItem } from '../ui/Animations';
+import { SlideIn, StaggerContainer, StaggerItem, FloatCard } from '../ui/Animations';
 
 interface SelectedWorkProps {
   onSelectProject: (projectId: string) => void;
@@ -90,7 +90,8 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
             const isDroneProject = project.id === 'drone-fleet-management';
             return (
               <StaggerItem key={project.id} className="relative scroll-mt-24">
-                <div className="rounded-2xl border border-white/8 bg-white/[0.02] hover:border-white/14 transition-all duration-300 p-6 sm:p-8 lg:p-10 space-y-7">
+                <FloatCard intensity={3}>
+                  <div className="rounded-2xl border border-white/8 bg-white/[0.02] hover:border-white/14 transition-all duration-300 p-6 sm:p-8 lg:p-10 space-y-7">
                   {/* Header */}
                   <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/8 text-sm">
                     <div className="flex flex-wrap items-center gap-2">
@@ -232,6 +233,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                     </button>
                   </div>
                 </div>
+              </FloatCard>
               </StaggerItem>
             );
           })}

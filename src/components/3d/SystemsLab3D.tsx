@@ -3,6 +3,7 @@ import { SYSTEMS_ARCHITECTURE_LAYERS } from '../../data/portfolioData';
 import type { SystemArchitectureLayer } from '../../data/portfolioData';
 import { Layers, ArrowDown, Activity, Server, Cpu, Database, Cloud, Radio, Sparkles, Play } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
+import { StaggerContainer, StaggerItem, FadeUp } from '../ui/Animations';
 
 const LAYER_ICONS: Record<string, React.ReactNode> = {
   FRONTEND: <Layers className="w-4 h-4 text-brand-electric" />,
@@ -74,7 +75,7 @@ export const SystemsLab3D: React.FC = () => {
       {/* Main Interactive Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6 relative z-10">
         {/* Left Column: Vertical Layer Topology */}
-        <div className="lg:col-span-7 flex flex-col gap-2.5">
+        <StaggerContainer className="lg:col-span-7 flex flex-col gap-2.5" staggerDelay={0.05}>
           {SYSTEMS_ARCHITECTURE_LAYERS.map((layer: SystemArchitectureLayer, idx: number) => {
             const isSelected = activeLayerIndex === idx;
             const isFlowing = flowStep === idx;
@@ -84,7 +85,7 @@ export const SystemsLab3D: React.FC = () => {
                 layer.connectedTo.includes(activeLayer.name));
 
             return (
-              <div key={layer.layer} className="relative group">
+              <StaggerItem key={layer.layer} className="relative group">
                 <button
                   onClick={() => {
                     soundFx.playClick(600 + idx * 40);
@@ -139,13 +140,13 @@ export const SystemsLab3D: React.FC = () => {
                     <ArrowDown className="w-3 h-3 text-brand-electric" />
                   </div>
                 )}
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
 
         {/* Right Column: Layer Inspector & Active Telemetry */}
-        <div className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-white/10 bg-[#0d0f18] p-5 font-mono">
+        <FadeUp delay={0.1} className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-white/10 bg-[#0d0f18] p-5 font-mono">
           <div>
             <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
               <span className="text-brand-electric font-bold flex items-center gap-1.5">
@@ -202,7 +203,7 @@ export const SystemsLab3D: React.FC = () => {
             <span>PIPELINE: ASYNC / REACTIVE</span>
             <span className="text-brand-electric">THROUGHPUT: ZERO BOTTLENECK</span>
           </div>
-        </div>
+        </FadeUp>
       </div>
     </div>
   );

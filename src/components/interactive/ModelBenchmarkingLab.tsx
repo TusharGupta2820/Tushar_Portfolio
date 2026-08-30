@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Cpu, Play, Sparkles, Zap, HardDrive, Gauge, CheckCircle2 } from 'lucide-react';
+import { Cpu, Play, Zap, HardDrive, Gauge, CheckCircle2 } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
+import { FadeUp } from '../ui/Animations';
 
 type ModelKey = 'deepseek-8b' | 'llama-8b' | 'mistral-7b' | 'yolov8x';
 type PrecisionKey = 'fp32' | 'fp16' | 'int8' | 'int4';
@@ -37,7 +38,7 @@ export const ModelBenchmarkingLab: React.FC = () => {
   const [selectedModel, setSelectedModel] = useState<ModelKey>('deepseek-8b');
   const [precision, setPrecision] = useState<PrecisionKey>('int4');
   const [hardware, setHardware] = useState<HardwareKey>('cuda');
-  const [contextTokens, setContextTokens] = useState<number>(2048);
+  const contextTokens = 2048;
 
   const [isSimulating, setIsSimulating] = useState<boolean>(false);
   const [streamedTokens, setStreamedTokens] = useState<string>('');
@@ -77,165 +78,140 @@ export const ModelBenchmarkingLab: React.FC = () => {
   };
 
   return (
-    <div className="w-full rounded-3xl border border-white/10 bg-[#090b14] p-6 sm:p-10 shadow-2xl relative overflow-hidden font-mono">
-      {/* Subtle Glow Backdrop */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
+    <FadeUp>
+      <div className="w-full rounded-3xl border border-white/10 bg-[#090b14] p-6 sm:p-10 shadow-2xl relative overflow-hidden font-mono">
+        {/* Subtle Glow Backdrop */}
+        <div className="absolute top-0 right-0 w-96 h-96 bg-brand-blue/5 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Header */}
-      <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-6 border-b border-white/10 gap-4">
-        <div className="space-y-1">
-          <div className="flex items-center gap-2 text-xs text-brand-electric font-bold tracking-wider">
-            <Cpu className="w-4 h-4 text-violet-400" />
-            <span>INTERACTIVE MODEL BENCHMARKING LAB</span>
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between pb-6 border-b border-white/10 gap-4">
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 text-xs text-brand-electric font-bold tracking-wider">
+              <Cpu className="w-4 h-4 text-violet-400" />
+              <span>INTERACTIVE MODEL BENCHMARKING LAB</span>
+            </div>
+            <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
+              Local Quantization & Compute Latency Simulator
+            </h3>
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
-            Local Quantization & Compute Latency Simulator
-          </h3>
+
+          <button
+            onClick={handleSimulateInference}
+            disabled={isSimulating}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs shadow-lg shadow-violet-600/30 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 self-start lg:self-auto"
+          >
+            <Play className={`w-3.5 h-3.5 ${isSimulating ? 'animate-spin' : ''}`} />
+            <span>{isSimulating ? 'STREAMING TENSORS...' : 'BENCHMARK INFERENCE'}</span>
+          </button>
         </div>
 
-        <button
-          onClick={handleSimulateInference}
-          disabled={isSimulating}
-          className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white font-bold text-xs shadow-lg shadow-violet-600/30 transition-all hover:scale-105 active:scale-95 disabled:opacity-50 self-start lg:self-auto"
-        >
-          <Play className={`w-3.5 h-3.5 ${isSimulating ? 'animate-spin' : ''}`} />
-          <span>{isSimulating ? 'STREAMING TOKENS...' : 'BENCHMARK INFERENCE'}</span>
-        </button>
-      </div>
-
-      {/* Interactive Controls & Telemetry Dashboard */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-8">
-        {/* Left Column: Interactive Param Selectors */}
-        <div className="lg:col-span-7 space-y-6">
-          {/* Model Selector */}
-          <div className="space-y-2">
-            <label className="text-[11px] text-editorial-dim tracking-wider uppercase">
-              1. TARGET NEURAL MODEL
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-              {(Object.keys(MODELS) as ModelKey[]).map((key) => {
-                const isSelected = selectedModel === key;
-                return (
+        {/* Controls and Stats Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mt-6">
+          {/* Controls */}
+          <div className="lg:col-span-6 space-y-5">
+            {/* Model Selection */}
+            <div className="space-y-2">
+              <label className="text-[10px] text-editorial-dim uppercase tracking-wider block">
+                1. SELECT BASE ARCHITECTURE
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                {(Object.keys(MODELS) as ModelKey[]).map((k) => (
                   <button
-                    key={key}
+                    key={k}
                     onClick={() => {
-                      soundFx.playClick(650);
-                      setSelectedModel(key);
+                      soundFx.playClick(600);
+                      setSelectedModel(k);
                     }}
                     className={`p-3 rounded-xl border text-left transition-all ${
-                      isSelected
-                        ? 'bg-violet-600/20 border-violet-500 text-white shadow-md shadow-violet-500/20'
-                        : 'bg-white/[0.02] border-white/5 text-editorial-muted hover:border-white/20'
+                      selectedModel === k
+                        ? 'bg-violet-600/20 border-violet-500 text-white shadow-md'
+                        : 'bg-white/[0.02] border-white/5 text-editorial-muted hover:border-white/15'
                     }`}
                   >
-                    <div className="font-bold text-xs text-white">{MODELS[key].name}</div>
-                    <div className="text-[10px] text-editorial-dim mt-0.5">{MODELS[key].params}</div>
+                    <div className="font-bold text-xs text-white">{MODELS[k].name.split('-')[0]}</div>
+                    <div className="text-[10px] text-editorial-dim">{MODELS[k].params}</div>
                   </button>
-                );
-              })}
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Quantization Level */}
-          <div className="space-y-2">
-            <label className="text-[11px] text-editorial-dim tracking-wider uppercase flex items-center justify-between">
-              <span>2. QUANTIZATION PRECISION</span>
-              <span className="text-emerald-400 font-bold">{prec.reduction}</span>
-            </label>
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-              {(Object.keys(PRECISION_FACTORS) as PrecisionKey[]).map((key) => {
-                const isSelected = precision === key;
-                return (
+            {/* Precision Quantization */}
+            <div className="space-y-2">
+              <label className="text-[10px] text-editorial-dim uppercase tracking-wider block">
+                2. QUANTIZATION STRATEGY
+              </label>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                {(Object.keys(PRECISION_FACTORS) as PrecisionKey[]).map((p) => (
                   <button
-                    key={key}
+                    key={p}
                     onClick={() => {
                       soundFx.playClick(700);
-                      setPrecision(key);
-                    }}
-                    className={`py-2 px-3 rounded-xl border text-center transition-all ${
-                      isSelected
-                        ? 'bg-brand-blue/20 border-brand-electric text-white font-bold shadow-md shadow-brand-blue/20'
-                        : 'bg-white/[0.02] border-white/5 text-editorial-muted hover:border-white/20'
-                    }`}
-                  >
-                    <div className="text-xs uppercase">{key}</div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Compute Hardware Target */}
-          <div className="space-y-2">
-            <label className="text-[11px] text-editorial-dim tracking-wider uppercase">
-              3. COMPUTE HARDWARE ACCELERATOR
-            </label>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-              {(Object.keys(HARDWARE_FACTORS) as HardwareKey[]).map((key) => {
-                const isSelected = hardware === key;
-                return (
-                  <button
-                    key={key}
-                    onClick={() => {
-                      soundFx.playClick(750);
-                      setHardware(key);
+                      setPrecision(p);
                     }}
                     className={`p-2.5 rounded-xl border text-center transition-all ${
-                      isSelected
-                        ? 'bg-emerald-500/15 border-emerald-400 text-white font-bold'
-                        : 'bg-white/[0.02] border-white/5 text-editorial-muted hover:border-white/20'
+                      precision === p
+                        ? 'bg-brand-blue/20 border-brand-electric text-white font-bold'
+                        : 'bg-white/[0.02] border-white/5 text-editorial-muted hover:border-white/15'
                     }`}
                   >
-                    <div className="text-[11px]">{HARDWARE_FACTORS[key].label}</div>
+                    <span className="uppercase block font-bold text-xs">{p}</span>
+                    <span className="text-[9px] text-editorial-dim block">{p === 'int4' ? 'Q4_K_M' : p.toUpperCase()}</span>
                   </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Context Window Slider */}
-          <div className="space-y-2">
-            <div className="flex items-center justify-between text-[11px]">
-              <span className="text-editorial-dim uppercase tracking-wider">4. CONTEXT WINDOW</span>
-              <span className="text-brand-electric font-bold">{contextTokens.toLocaleString()} TOKENS</span>
-            </div>
-            <input
-              type="range"
-              min="512"
-              max="32768"
-              step="512"
-              value={contextTokens}
-              onChange={(e) => setContextTokens(Number(e.target.value))}
-              className="w-full h-1.5 bg-white/10 rounded-lg appearance-none cursor-pointer accent-brand-electric"
-            />
-          </div>
-        </div>
-
-        {/* Right Column: Live Telemetry Gauges & Streaming Terminal */}
-        <div className="lg:col-span-5 flex flex-col justify-between space-y-4 rounded-2xl border border-white/10 bg-[#06070c] p-5">
-          {/* Top Gauges */}
-          <div className="space-y-4">
-            <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
-              <span className="text-brand-electric font-bold flex items-center gap-1.5">
-                <Sparkles className="w-3.5 h-3.5 text-violet-400" />
-                ESTIMATED COMPUTE FOOTPRINT
-              </span>
-              <span className="text-emerald-400 text-[10px]">REAL-TIME</span>
-            </div>
-
-            {/* VRAM Gauge */}
-            <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
-              <div className="flex items-center justify-between text-xs">
-                <span className="text-editorial-muted flex items-center gap-1.5">
-                  <HardDrive className="w-3.5 h-3.5 text-brand-electric" /> VRAM CONSUMPTION
-                </span>
-                <span className="text-white font-bold text-sm">{calculatedVram} GB</span>
+                ))}
               </div>
-              <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-emerald-400 via-brand-blue to-violet-500 transition-all duration-300"
-                  style={{ width: `${Math.min(100, (Number(calculatedVram) / 16) * 100)}%` }}
-                />
+            </div>
+
+            {/* Hardware Accelerator Target */}
+            <div className="space-y-2">
+              <label className="text-[10px] text-editorial-dim uppercase tracking-wider block">
+                3. EXECUTION HARDWARE ACCELERATOR
+              </label>
+              <div className="grid grid-cols-3 gap-2 text-xs">
+                {(Object.keys(HARDWARE_FACTORS) as HardwareKey[]).map((h) => (
+                  <button
+                    key={h}
+                    onClick={() => {
+                      soundFx.playClick(800);
+                      setHardware(h);
+                    }}
+                    className={`p-2.5 rounded-xl border text-center transition-all ${
+                      hardware === h
+                        ? 'bg-emerald-600/20 border-emerald-400 text-white font-bold'
+                        : 'bg-white/[0.02] border-white/5 text-editorial-muted hover:border-white/15'
+                    }`}
+                  >
+                    <span className="capitalize block font-bold text-xs">
+                      {h === 'cuda' ? 'CUDA RTX' : h === 'apple-metal' ? 'Metal M-Series' : 'AVX2 CPU'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Real-time Telemetry Calculations */}
+          <div className="lg:col-span-6 flex flex-col justify-between space-y-4">
+            {/* Memory & Efficiency Readout */}
+            <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+              <div className="flex items-center justify-between text-xs pb-2 border-b border-white/10">
+                <span className="text-editorial-dim">ACTIVE MODEL METRIC MATRIX</span>
+                <span className="text-emerald-400 font-bold text-[11px]">{prec.reduction}</span>
+              </div>
+
+              {/* Memory Bar */}
+              <div className="space-y-1.5">
+                <div className="flex justify-between text-xs">
+                  <span className="text-editorial-muted flex items-center gap-1.5">
+                    <HardDrive className="w-3.5 h-3.5 text-brand-electric" /> ESTIMATED VRAM FOOTPRINT
+                  </span>
+                  <span className="text-white font-bold">{calculatedVram} GB</span>
+                </div>
+                <div className="w-full h-2 rounded-full bg-white/10 overflow-hidden">
+                  <div
+                    className="h-full bg-gradient-to-r from-brand-electric to-emerald-400 rounded-full transition-all duration-500"
+                    style={{ width: `${Math.min((parseFloat(calculatedVram) / 16) * 100, 100)}%` }}
+                  />
+                </div>
               </div>
             </div>
 
@@ -243,45 +219,45 @@ export const ModelBenchmarkingLab: React.FC = () => {
             <div className="grid grid-cols-2 gap-2.5">
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-1">
                 <span className="text-[10px] text-editorial-dim flex items-center gap-1">
-                  <Gauge className="w-3 h-3 text-cyan-400" /> THROUGHPUT
+                  <Gauge className="w-3.5 h-3.5 text-cyan-400" /> THROUGHPUT
                 </span>
                 <div className="text-base font-bold text-cyan-300">{calculatedThroughput} tok/s</div>
               </div>
 
               <div className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-1">
                 <span className="text-[10px] text-editorial-dim flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-amber-400" /> TTFT LATENCY
+                  <Zap className="w-3.5 h-3.5 text-amber-400" /> TTFT LATENCY
                 </span>
                 <div className="text-base font-bold text-amber-300">{calculatedTtft} ms</div>
               </div>
             </div>
-          </div>
 
-          {/* Streaming Output Visualizer */}
-          <div className="p-3.5 rounded-xl bg-black/60 border border-white/5 flex flex-col justify-between min-h-[140px] text-xs font-mono">
-            <div className="space-y-1">
-              <div className="text-[10px] text-editorial-dim flex items-center justify-between pb-1 border-b border-white/5">
-                <span>INFERENCE STREAM TERMINAL</span>
-                {tokenCounter > 0 && <span className="text-emerald-400 font-bold">{tokenCounter} tokens</span>}
+            {/* Streaming Output Visualizer */}
+            <div className="p-3.5 rounded-xl bg-black/60 border border-white/5 flex flex-col justify-between min-h-[140px] text-xs font-mono">
+              <div className="space-y-1">
+                <div className="text-[10px] text-editorial-dim flex items-center justify-between pb-1 border-b border-white/5">
+                  <span>INFERENCE STREAM TERMINAL</span>
+                  {tokenCounter > 0 && <span className="text-emerald-400 font-bold">{tokenCounter} tokens</span>}
+                </div>
+                <p className="text-editorial-text text-[11px] leading-relaxed pt-1">
+                  {streamedTokens || (
+                    <span className="text-editorial-dim italic">
+                      Click "BENCHMARK INFERENCE" above to simulate token generation pipeline...
+                    </span>
+                  )}
+                </p>
               </div>
-              <p className="text-editorial-text text-[11px] leading-relaxed pt-1">
-                {streamedTokens || (
-                  <span className="text-editorial-dim italic">
-                    Click "BENCHMARK INFERENCE" above to simulate token generation pipeline...
-                  </span>
-                )}
-              </p>
-            </div>
 
-            <div className="pt-2 text-[10px] text-editorial-dim flex items-center justify-between border-t border-white/5 mt-2">
-              <span className="text-brand-electric flex items-center gap-1">
-                <CheckCircle2 className="w-3 h-3 text-emerald-400" /> EDGE-FIRST PIPELINE
-              </span>
-              <span>ZERO GPU CLOUD DEPENDENCY</span>
+              <div className="pt-2 text-[10px] text-editorial-dim flex items-center justify-between border-t border-white/5 mt-2">
+                <span className="text-brand-electric flex items-center gap-1">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" /> EDGE-FIRST PIPELINE
+                </span>
+                <span>ZERO GPU CLOUD DEPENDENCY</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </FadeUp>
   );
 };

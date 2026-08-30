@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 
 // ─────────────────────────────────────────────────────────
 // SHARED EASING CURVES & PHYSICS
@@ -7,25 +7,25 @@ import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'frame
 export const ease = {
   out: [0.16, 1, 0.3, 1] as [number, number, number, number],
   inOut: [0.65, 0, 0.35, 1] as [number, number, number, number],
-  spring: { type: 'spring', damping: 24, stiffness: 200, mass: 0.8 } as const,
-  springLight: { type: 'spring', damping: 30, stiffness: 300, mass: 0.5 } as const,
+  spring: { type: 'spring', damping: 22, stiffness: 180, mass: 0.8 } as const,
+  springLight: { type: 'spring', damping: 28, stiffness: 260, mass: 0.5 } as const,
 };
 
 // ─────────────────────────────────────────────────────────
-// SCROLL PROGRESS BAR — Subtle 3D gradient line along top
+// SCROLL PROGRESS BAR — 3D Top Line
 // ─────────────────────────────────────────────────────────
 export const ScrollProgressBar: React.FC = () => {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
+    stiffness: 120,
+    damping: 28,
     restDelta: 0.001,
   });
 
   return (
     <motion.div
       style={{ scaleX }}
-      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-brand-electric via-brand-blue to-violet-500 z-50 origin-left pointer-events-none"
+      className="fixed top-0 left-0 right-0 h-[2.5px] bg-gradient-to-r from-brand-electric via-brand-blue to-violet-500 z-50 origin-left pointer-events-none shadow-[0_0_8px_rgba(59,130,246,0.5)]"
     />
   );
 };
@@ -45,16 +45,13 @@ export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
   children,
   delay = 0,
   className = '',
-  distance = 40,
-  tiltAngle = 8,
+  distance = 35,
+  tiltAngle = 6,
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
   const prefersReduced = useReducedMotion();
 
   return (
     <motion.div
-      ref={ref}
       className={className}
       style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
       initial={{
@@ -62,17 +59,14 @@ export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
         y: prefersReduced ? 0 : distance,
         rotateX: prefersReduced ? 0 : tiltAngle,
       }}
-      animate={
-        isInView
-          ? {
-              opacity: 1,
-              y: 0,
-              rotateX: 0,
-            }
-          : {}
-      }
+      whileInView={{
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+      }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{
-        duration: 0.8,
+        duration: 0.75,
         delay,
         ease: ease.out,
       }}
@@ -83,7 +77,7 @@ export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
 };
 
 // ─────────────────────────────────────────────────────────
-// FADE UP — Smooth upward reveal
+// FADE UP — Smooth upward scroll reveal
 // ─────────────────────────────────────────────────────────
 interface FadeUpProps {
   children: React.ReactNode;
@@ -100,16 +94,14 @@ export const FadeUp: React.FC<FadeUpProps> = ({
   distance = 30,
   duration = 0.65,
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
   const prefersReduced = useReducedMotion();
 
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={{ opacity: 0, y: prefersReduced ? 0 : distance }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{ duration, delay, ease: ease.out }}
     >
       {children}
@@ -118,7 +110,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
 };
 
 // ─────────────────────────────────────────────────────────
-// FADE IN (opacity only)
+// FADE IN (Opacity only)
 // ─────────────────────────────────────────────────────────
 interface FadeInProps {
   children: React.ReactNode;
@@ -128,14 +120,12 @@ interface FadeInProps {
 }
 
 export const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, className = '', duration = 0.5 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={{ opacity: 0 }}
-      animate={isInView ? { opacity: 1 } : {}}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{ duration, delay, ease: ease.out }}
     >
       {children}
@@ -144,7 +134,7 @@ export const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, className =
 };
 
 // ─────────────────────────────────────────────────────────
-// STAGGER CONTAINER — Sequenced children animation
+// STAGGER CONTAINER — Sequenced children animation on scroll
 // ─────────────────────────────────────────────────────────
 interface StaggerContainerProps {
   children: React.ReactNode;
@@ -156,11 +146,9 @@ interface StaggerContainerProps {
 export const StaggerContainer: React.FC<StaggerContainerProps> = ({
   children,
   className = '',
-  staggerDelay = 0.07,
+  staggerDelay = 0.06,
   containerDelay = 0,
 }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-50px' });
   const prefersReduced = useReducedMotion();
 
   const container = {
@@ -175,11 +163,11 @@ export const StaggerContainer: React.FC<StaggerContainerProps> = ({
 
   return (
     <motion.div
-      ref={ref}
       className={className}
       variants={container}
       initial="hidden"
-      animate={isInView ? 'show' : 'hidden'}
+      whileInView="show"
+      viewport={{ once: true, amount: 0.1 }}
     >
       {children}
     </motion.div>
@@ -197,11 +185,12 @@ interface StaggerItemProps {
 export const StaggerItem: React.FC<StaggerItemProps> = ({ children, className = '' }) => {
   const prefersReduced = useReducedMotion();
   const item = {
-    hidden: { opacity: 0, y: prefersReduced ? 0 : 20 },
+    hidden: { opacity: 0, y: prefersReduced ? 0 : 22, rotateX: prefersReduced ? 0 : 4 },
     show: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.55, ease: ease.out },
+      rotateX: 0,
+      transition: { duration: 0.6, ease: ease.out },
     },
   };
 
@@ -223,16 +212,14 @@ interface SlideInProps {
 }
 
 export const SlideIn: React.FC<SlideInProps> = ({ children, from = 'left', delay = 0, className = '' }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
   const prefersReduced = useReducedMotion();
 
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={{ opacity: 0, x: prefersReduced ? 0 : (from === 'left' ? -35 : 35) }}
-      animate={isInView ? { opacity: 1, x: 0 } : {}}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.65, delay, ease: ease.out }}
     >
       {children}
@@ -250,16 +237,14 @@ interface ScaleUpProps {
 }
 
 export const ScaleUp: React.FC<ScaleUpProps> = ({ children, delay = 0, className = '' }) => {
-  const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-40px' });
   const prefersReduced = useReducedMotion();
 
   return (
     <motion.div
-      ref={ref}
       className={className}
       initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.92 }}
-      animate={isInView ? { opacity: 1, scale: 1 } : {}}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, amount: 0.12 }}
       transition={{ duration: 0.5, delay, ease: ease.out }}
     >
       {children}
@@ -268,7 +253,7 @@ export const ScaleUp: React.FC<ScaleUpProps> = ({ children, delay = 0, className
 };
 
 // ─────────────────────────────────────────────────────────
-// FLOAT CARD — 3D perspective tilt on hover with glare
+// FLOAT CARD — 3D perspective tilt on hover
 // ─────────────────────────────────────────────────────────
 interface FloatCardProps {
   children: React.ReactNode;
@@ -301,7 +286,7 @@ export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', 
       animate={{
         rotateX: tilt.y,
         rotateY: tilt.x,
-        scale: isHovered ? 1.015 : 1,
+        scale: isHovered ? 1.018 : 1,
       }}
       transition={ease.springLight}
       onMouseMove={handleMouseMove}
@@ -326,9 +311,9 @@ export const SectionTransition: React.FC<SectionTransitionProps> = ({ children, 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: prefersReduced ? 0 : 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: prefersReduced ? 0 : -10 }}
+      initial={{ opacity: 0, y: prefersReduced ? 0 : 25, scale: prefersReduced ? 1 : 0.99 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: prefersReduced ? 0 : -15, scale: prefersReduced ? 1 : 0.99 }}
       transition={{ duration: 0.45, ease: ease.out }}
     >
       {children}
@@ -345,15 +330,13 @@ interface CounterProps {
 }
 
 export const Counter: React.FC<CounterProps> = ({ value, className = '' }) => {
-  const ref = React.useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true });
-
+  const [inView, setInView] = React.useState(false);
   const num = parseFloat(value.replace(/[^0-9.]/g, ''));
   const suffix = value.replace(/[0-9.]/g, '');
   const [display, setDisplay] = React.useState('0');
 
   React.useEffect(() => {
-    if (!isInView || isNaN(num)) {
+    if (!inView || isNaN(num)) {
       setDisplay(value);
       return;
     }
@@ -371,11 +354,15 @@ export const Counter: React.FC<CounterProps> = ({ value, className = '' }) => {
       if (elapsed < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  }, [isInView, num, suffix, value]);
+  }, [inView, num, suffix, value]);
 
   return (
-    <span ref={ref} className={className}>
+    <motion.span
+      className={className}
+      onViewportEnter={() => setInView(true)}
+      viewport={{ once: true }}
+    >
       {display}
-    </span>
+    </motion.span>
   );
 };
