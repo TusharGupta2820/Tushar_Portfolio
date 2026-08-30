@@ -7,7 +7,7 @@ import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 export const ease = {
   out: [0.16, 1, 0.3, 1] as [number, number, number, number],
   inOut: [0.65, 0, 0.35, 1] as [number, number, number, number],
-  spring: { type: 'spring', damping: 22, stiffness: 180, mass: 0.8 } as const,
+  spring: { type: 'spring', damping: 24, stiffness: 200, mass: 0.8 } as const,
   springLight: { type: 'spring', damping: 28, stiffness: 260, mass: 0.5 } as const,
 };
 
@@ -31,7 +31,7 @@ export const ScrollProgressBar: React.FC = () => {
 };
 
 // ─────────────────────────────────────────────────────────
-// SCROLL 3D REVEAL — 3D Perspective entrance on scroll
+// SCROLL 3D REVEAL — Guaranteed visible + 3D entrance
 // ─────────────────────────────────────────────────────────
 interface Scroll3DRevealProps {
   children: React.ReactNode;
@@ -45,8 +45,8 @@ export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
   children,
   delay = 0,
   className = '',
-  distance = 35,
-  tiltAngle = 6,
+  distance = 30,
+  tiltAngle = 5,
 }) => {
   const prefersReduced = useReducedMotion();
 
@@ -64,9 +64,9 @@ export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
         y: 0,
         rotateX: 0,
       }}
-      viewport={{ once: true, amount: 0.12 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{
-        duration: 0.75,
+        duration: 0.65,
         delay,
         ease: ease.out,
       }}
@@ -77,7 +77,7 @@ export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
 };
 
 // ─────────────────────────────────────────────────────────
-// FADE UP — Smooth upward scroll reveal
+// FADE UP — Smooth upward reveal (always renders visibly)
 // ─────────────────────────────────────────────────────────
 interface FadeUpProps {
   children: React.ReactNode;
@@ -91,8 +91,8 @@ export const FadeUp: React.FC<FadeUpProps> = ({
   children,
   delay = 0,
   className = '',
-  distance = 30,
-  duration = 0.65,
+  distance = 25,
+  duration = 0.55,
 }) => {
   const prefersReduced = useReducedMotion();
 
@@ -101,7 +101,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
       className={className}
       initial={{ opacity: 0, y: prefersReduced ? 0 : distance }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ duration, delay, ease: ease.out }}
     >
       {children}
@@ -125,7 +125,7 @@ export const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, className =
       className={className}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      viewport={{ once: true, amount: 0.12 }}
+      viewport={{ once: true, amount: 0.05 }}
       transition={{ duration, delay, ease: ease.out }}
     >
       {children}
@@ -134,7 +134,7 @@ export const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, className =
 };
 
 // ─────────────────────────────────────────────────────────
-// STAGGER CONTAINER — Sequenced children animation on scroll
+// STAGGER CONTAINER — Reliable sequenced reveal for cards
 // ─────────────────────────────────────────────────────────
 interface StaggerContainerProps {
   children: React.ReactNode;
@@ -146,14 +146,15 @@ interface StaggerContainerProps {
 export const StaggerContainer: React.FC<StaggerContainerProps> = ({
   children,
   className = '',
-  staggerDelay = 0.06,
-  containerDelay = 0,
+  staggerDelay = 0.05,
+  containerDelay = 0.02,
 }) => {
   const prefersReduced = useReducedMotion();
 
   const container = {
-    hidden: {},
+    hidden: { opacity: 0 },
     show: {
+      opacity: 1,
       transition: {
         delayChildren: containerDelay,
         staggerChildren: prefersReduced ? 0 : staggerDelay,
@@ -166,8 +167,7 @@ export const StaggerContainer: React.FC<StaggerContainerProps> = ({
       className={className}
       variants={container}
       initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.1 }}
+      animate="show"
     >
       {children}
     </motion.div>
@@ -185,12 +185,11 @@ interface StaggerItemProps {
 export const StaggerItem: React.FC<StaggerItemProps> = ({ children, className = '' }) => {
   const prefersReduced = useReducedMotion();
   const item = {
-    hidden: { opacity: 0, y: prefersReduced ? 0 : 22, rotateX: prefersReduced ? 0 : 4 },
+    hidden: { opacity: 0, y: prefersReduced ? 0 : 20 },
     show: {
       opacity: 1,
       y: 0,
-      rotateX: 0,
-      transition: { duration: 0.6, ease: ease.out },
+      transition: { duration: 0.5, ease: ease.out },
     },
   };
 
@@ -217,10 +216,10 @@ export const SlideIn: React.FC<SlideInProps> = ({ children, from = 'left', delay
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, x: prefersReduced ? 0 : (from === 'left' ? -35 : 35) }}
+      initial={{ opacity: 0, x: prefersReduced ? 0 : (from === 'left' ? -30 : 30) }}
       whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.65, delay, ease: ease.out }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.55, delay, ease: ease.out }}
     >
       {children}
     </motion.div>
@@ -242,10 +241,10 @@ export const ScaleUp: React.FC<ScaleUpProps> = ({ children, delay = 0, className
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.92 }}
+      initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.94 }}
       whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true, amount: 0.12 }}
-      transition={{ duration: 0.5, delay, ease: ease.out }}
+      viewport={{ once: true, amount: 0.05 }}
+      transition={{ duration: 0.45, delay, ease: ease.out }}
     >
       {children}
     </motion.div>
@@ -261,7 +260,7 @@ interface FloatCardProps {
   intensity?: number;
 }
 
-export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', intensity = 7 }) => {
+export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', intensity = 6 }) => {
   const prefersReduced = useReducedMotion();
   const [tilt, setTilt] = React.useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = React.useState(false);
@@ -286,7 +285,7 @@ export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', 
       animate={{
         rotateX: tilt.y,
         rotateY: tilt.x,
-        scale: isHovered ? 1.018 : 1,
+        scale: isHovered ? 1.015 : 1,
       }}
       transition={ease.springLight}
       onMouseMove={handleMouseMove}
@@ -311,10 +310,10 @@ export const SectionTransition: React.FC<SectionTransitionProps> = ({ children, 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: prefersReduced ? 0 : 25, scale: prefersReduced ? 1 : 0.99 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
-      exit={{ opacity: 0, y: prefersReduced ? 0 : -15, scale: prefersReduced ? 1 : 0.99 }}
-      transition={{ duration: 0.45, ease: ease.out }}
+      initial={{ opacity: 0, y: prefersReduced ? 0 : 15 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: prefersReduced ? 0 : -10 }}
+      transition={{ duration: 0.35, ease: ease.out }}
     >
       {children}
     </motion.div>
