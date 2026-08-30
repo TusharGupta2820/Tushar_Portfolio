@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { LoadingSequence } from './components/ui/LoadingSequence';
 import { CustomCursor } from './components/ui/CustomCursor';
 import { Navigation } from './components/ui/Navigation';
@@ -7,7 +8,7 @@ import { ResumeModal } from './components/ui/ResumeModal';
 import { CaseStudyModal } from './components/modals/CaseStudyModal';
 import { ResearchNoteModal } from './components/modals/ResearchNoteModal';
 import { InteractiveTerminal } from './components/ui/InteractiveTerminal';
-import { ScrollProgressBar, Scroll3DReveal } from './components/ui/Animations';
+import { SectionTransition } from './components/ui/Animations';
 
 import { Hero } from './components/sections/Hero';
 import { SelectedWork } from './components/sections/SelectedWork';
@@ -49,28 +50,6 @@ export function App() {
     }
   }, [theme]);
 
-  // ScrollSpy to update active navigation item on scroll
-  useEffect(() => {
-    const sectionIds = ['overview', 'work', 'systems', 'research', 'experience', 'skills', 'about', 'contact'];
-    const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
-
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const section = document.getElementById(sectionIds[i]);
-        if (section) {
-          const top = section.offsetTop;
-          if (scrollPosition >= top) {
-            setActiveSection(sectionIds[i]);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
@@ -87,23 +66,11 @@ export function App() {
 
   const handleNavigateSection = (sectionId: string) => {
     setActiveSection(sectionId);
-    if (sectionId === 'overview') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const el = document.getElementById(sectionId);
-      if (el) {
-        const yOffset = -70;
-        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <div className="min-h-screen bg-background text-editorial-text selection:bg-brand-blue selection:text-white relative w-full overflow-x-hidden transition-colors duration-300">
-      {/* 3D Scroll Progress Line */}
-      <ScrollProgressBar />
-
       {/* Short loading sequence */}
       {isLoading && <LoadingSequence onComplete={() => setIsLoading(false)} />}
 
@@ -120,83 +87,84 @@ export function App() {
         onToggleTheme={toggleTheme}
       />
 
-      {/* Continuous Single-Page Flow with 3D Scroll Reveals */}
-      <main className="relative z-10 w-full pt-6 space-y-12">
-        {/* OVERVIEW / HERO */}
-        <section id="overview" className="w-full">
-          <Hero
-            onOpenResumeModal={() => setResumeModalOpen(true)}
-            onNavigate={handleNavigateSection}
-          />
-        </section>
+      {/* Section-Wise Content Opening with 3D Transitions */}
+      <main className="relative z-10 w-full pt-16 min-h-[85vh]">
+        <AnimatePresence mode="wait">
+          {/* OVERVIEW / HERO */}
+          {activeSection === 'overview' && (
+            <SectionTransition key="overview">
+              <Hero
+                onOpenResumeModal={() => setResumeModalOpen(true)}
+                onNavigate={handleNavigateSection}
+              />
+            </SectionTransition>
+          )}
 
-        {/* WORK */}
-        <section id="work" className="w-full">
-          <Scroll3DReveal>
-            <SelectedWork onSelectProject={handleSelectProject} />
-          </Scroll3DReveal>
-        </section>
+          {/* WORK */}
+          {activeSection === 'work' && (
+            <SectionTransition key="work">
+              <SelectedWork onSelectProject={handleSelectProject} />
+            </SectionTransition>
+          )}
 
-        {/* SYSTEMS LAB */}
-        <section id="systems" className="py-24 sm:py-32 border-t border-white/8 w-full">
-          <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-8">
-            <Scroll3DReveal>
-              <div className="max-w-2xl space-y-3">
-                <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-brand-electric" /> Architecture & topologies
-                </p>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                  Systems I build
-                </h2>
-                <p className="text-base text-editorial-muted leading-relaxed font-light">
-                  From frontend component orchestration to high-throughput async gateways, distributed telemetry, and local model inference.
-                </p>
-              </div>
-            </Scroll3DReveal>
+          {/* SYSTEMS LAB */}
+          {activeSection === 'systems' && (
+            <SectionTransition key="systems">
+              <section id="systems" className="py-24 sm:py-32 w-full">
+                <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-8">
+                  <div className="max-w-2xl space-y-3">
+                    <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-electric" /> Architecture & topologies
+                    </p>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                      Systems I build
+                    </h2>
+                    <p className="text-base text-editorial-muted leading-relaxed font-light">
+                      From frontend component orchestration to high-throughput async gateways, distributed telemetry, and local model inference.
+                    </p>
+                  </div>
+                  <SystemsLab3D />
+                </div>
+              </section>
+            </SectionTransition>
+          )}
 
-            <Scroll3DReveal delay={0.1}>
-              <SystemsLab3D />
-            </Scroll3DReveal>
-          </div>
-        </section>
+          {/* RESEARCH */}
+          {activeSection === 'research' && (
+            <SectionTransition key="research">
+              <ResearchExplorations onSelectResearch={handleSelectResearch} />
+            </SectionTransition>
+          )}
 
-        {/* RESEARCH */}
-        <section id="research" className="w-full">
-          <Scroll3DReveal>
-            <ResearchExplorations onSelectResearch={handleSelectResearch} />
-          </Scroll3DReveal>
-        </section>
+          {/* EXPERIENCE */}
+          {activeSection === 'experience' && (
+            <SectionTransition key="experience">
+              <Experience />
+            </SectionTransition>
+          )}
 
-        {/* EXPERIENCE */}
-        <section id="experience" className="w-full">
-          <Scroll3DReveal>
-            <Experience />
-          </Scroll3DReveal>
-        </section>
+          {/* SKILLS */}
+          {activeSection === 'skills' && (
+            <SectionTransition key="skills">
+              <TechnicalSkills />
+            </SectionTransition>
+          )}
 
-        {/* SKILLS */}
-        <section id="skills" className="w-full">
-          <Scroll3DReveal>
-            <TechnicalSkills />
-          </Scroll3DReveal>
-        </section>
+          {/* ABOUT & PROOF OF WORK */}
+          {activeSection === 'about' && (
+            <SectionTransition key="about">
+              <OpenSourceAndAbout />
+              <EducationAndHackathons />
+            </SectionTransition>
+          )}
 
-        {/* ABOUT & PROOF OF WORK */}
-        <section id="about" className="w-full">
-          <Scroll3DReveal>
-            <OpenSourceAndAbout />
-          </Scroll3DReveal>
-          <Scroll3DReveal delay={0.1}>
-            <EducationAndHackathons />
-          </Scroll3DReveal>
-        </section>
-
-        {/* CONTACT & FOOTER */}
-        <section id="contact" className="w-full">
-          <Scroll3DReveal>
-            <ContactAndFooter />
-          </Scroll3DReveal>
-        </section>
+          {/* CONTACT & FOOTER */}
+          {activeSection === 'contact' && (
+            <SectionTransition key="contact">
+              <ContactAndFooter />
+            </SectionTransition>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Interactive Developer REPL Terminal */}

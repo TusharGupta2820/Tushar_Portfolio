@@ -52,17 +52,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     soundFx.playClick(650);
     setMobileMenuOpen(false);
     onSelectSection(id);
-
-    if (id === 'overview') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    } else {
-      const el = document.getElementById(id);
-      if (el) {
-        const yOffset = -70;
-        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: 'smooth' });
-      }
-    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
