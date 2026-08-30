@@ -50,14 +50,14 @@ export const SystemsLab3D: React.FC = () => {
       <div className="absolute inset-0 tech-dots opacity-25 pointer-events-none" />
 
       {/* Top Section Header */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-white/10 gap-4 relative z-10">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pb-6 border-b border-white/8 gap-4 relative z-10">
         <div>
-          <div className="flex items-center gap-2 font-mono text-xs text-brand-electric mb-1 tracking-wider">
-            <span className="w-2 h-2 rounded-full bg-brand-electric animate-ping" />
-            INTERACTIVE SYSTEMS ARCHITECTURE LAB
+          <div className="flex items-center gap-2 text-xs text-brand-electric mb-1">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-electric" />
+            Interactive Systems Architecture
           </div>
-          <h3 className="text-xl sm:text-2xl font-bold font-display text-white">
-            End-to-End System Topologies
+          <h3 className="text-lg sm:text-xl font-semibold text-white">
+            End-to-end system topologies
           </h3>
         </div>
 

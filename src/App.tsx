@@ -115,14 +115,14 @@ export function App() {
             <SectionTransition key="systems">
               <section id="systems" className="py-24 sm:py-32 relative w-full">
                 <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-6">
-                  <div className="max-w-3xl space-y-2">
-                    <span className="font-mono text-xs text-brand-electric font-semibold tracking-wider">
-                      CORE COMPUTATIONAL TOPOLOGIES
-                    </span>
-                    <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
-                      SYSTEMS I BUILD
+                  <div className="max-w-2xl space-y-3">
+                    <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono flex items-center gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-electric" /> Architecture & topologies
+                    </p>
+                    <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+                      Systems I build
                     </h2>
-                    <p className="text-base sm:text-lg text-editorial-muted font-sans font-light">
+                    <p className="text-base text-editorial-muted leading-relaxed font-light">
                       From frontend component orchestration to high-throughput async gateways, distributed telemetry, and local model inference.
                     </p>
                   </div>

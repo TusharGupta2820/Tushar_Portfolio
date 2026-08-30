@@ -5,88 +5,68 @@ import { SlideIn, StaggerContainer, StaggerItem, FloatCard } from '../ui/Animati
 
 export const Experience: React.FC = () => {
   return (
-    <section id="experience" className="relative py-28 sm:py-36 border-t border-white/10 overflow-hidden w-full">
-      <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-20 relative z-10">
+    <section id="experience" className="relative py-24 sm:py-32 border-t border-white/8 w-full">
+      <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-16">
 
-        {/* Section Header */}
-        <SlideIn from="left" className="max-w-3xl space-y-3">
-          <div className="flex items-center gap-2 font-mono text-xs text-brand-electric font-semibold tracking-wider">
-            <Briefcase className="w-4 h-4" />
-            <span>PROFESSIONAL TIMELINE // 04 ROLES</span>
-          </div>
-
-          <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
-            EXPERIENCE
+        {/* Header */}
+        <SlideIn from="left" className="space-y-3 max-w-2xl">
+          <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono flex items-center gap-2">
+            <Briefcase className="w-3.5 h-3.5" /> Experience
+          </p>
+          <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
+            Where I've worked
           </h2>
-
-          <p className="text-base sm:text-lg text-editorial-muted font-sans font-light leading-relaxed">
-            Internships, engineering leadership, and product deployment across AI strategy, full-stack systems, and web architecture.
+          <p className="text-base text-editorial-muted leading-relaxed">
+            Internships and engineering roles across AI strategy, full-stack systems, and web architecture.
           </p>
         </SlideIn>
 
-        {/* Experience Cards — staggered reveal */}
-        <StaggerContainer className="space-y-8" staggerDelay={0.12} containerDelay={0.05}>
-          {EXPERIENCES.map((exp, index) => (
+        {/* Cards */}
+        <StaggerContainer className="space-y-6" staggerDelay={0.1}>
+          {EXPERIENCES.map((exp) => (
             <StaggerItem key={exp.id}>
-              <FloatCard intensity={4}>
-                <div className="p-6 sm:p-8 lg:p-10 rounded-3xl border border-white/10 bg-[#090a10]/80 backdrop-blur-md hover:border-brand-blue/30 transition-all duration-300 shadow-xl space-y-6">
-                  {/* Header Info */}
-                  <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-white/10">
-                    <div>
-                      <div className="flex items-center gap-3">
-                        <span className="text-xl sm:text-2xl font-bold font-display text-white">
-                          {exp.company}
-                        </span>
-                        <span className="font-mono text-xs text-editorial-dim px-2 py-0.5 rounded bg-white/5">
-                          0{index + 1}
-                        </span>
-                      </div>
-                      <div className="text-sm sm:text-base text-brand-electric font-mono font-medium mt-0.5">
-                        {exp.role}
-                      </div>
-                    </div>
+              <FloatCard intensity={3}>
+                <div className="p-6 sm:p-8 rounded-2xl border border-white/8 bg-white/[0.025] hover:border-white/14 transition-all duration-300 space-y-6">
 
-                    <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-editorial-muted">
+                  {/* Header row */}
+                  <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">{exp.company}</h3>
+                      <p className="text-brand-electric text-sm font-medium mt-0.5">{exp.role}</p>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-3 text-sm text-editorial-dim shrink-0">
                       <span className="flex items-center gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-brand-blue" />
+                        <MapPin className="w-3.5 h-3.5" />
                         {exp.location}
                       </span>
-                      <span className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.03] border border-white/10 text-white">
-                        <Calendar className="w-3.5 h-3.5 text-brand-electric" />
+                      <span className="flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/8 text-xs">
+                        <Calendar className="w-3 h-3" />
                         {exp.period}
                       </span>
                     </div>
                   </div>
 
-                  {/* Focus Areas & Achievements */}
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                    <div className="lg:col-span-8 space-y-4">
-                      <div className="font-mono text-[10px] text-editorial-dim uppercase tracking-wider">
-                        RESPONSIBILITIES & ENGINEERING HIGHLIGHTS:
-                      </div>
+                  {/* Body */}
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                    <ul className="lg:col-span-8 space-y-2.5">
+                      {exp.achievements.map((ach, idx) => (
+                        <li key={idx} className="flex items-start gap-3 text-sm text-editorial-muted leading-relaxed">
+                          <CheckCircle2 className="w-4 h-4 text-brand-electric/70 shrink-0 mt-0.5" />
+                          <span>{ach}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                      <ul className="space-y-2.5 text-xs sm:text-sm text-editorial-text font-sans leading-relaxed">
-                        {exp.achievements.map((ach, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <CheckCircle2 className="w-4 h-4 text-brand-electric shrink-0 mt-0.5" />
-                            <span>{ach}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    {/* Impact Cards — staggered pop-in */}
-                    <div className="lg:col-span-4 space-y-3">
-                      <div className="font-mono text-[10px] text-editorial-dim uppercase tracking-wider flex items-center gap-1">
-                        <TrendingUp className="w-3 h-3 text-emerald-400" />
-                        <span>REPORTED OUTCOMES:</span>
-                      </div>
-
-                      <StaggerContainer className="space-y-2.5" staggerDelay={0.07}>
+                    {/* Impact */}
+                    <div className="lg:col-span-4 space-y-2">
+                      <p className="text-xs text-editorial-dim flex items-center gap-1.5">
+                        <TrendingUp className="w-3 h-3 text-emerald-400" /> Outcomes
+                      </p>
+                      <StaggerContainer className="space-y-2" staggerDelay={0.06}>
                         {exp.impact.map((imp, idx) => (
                           <StaggerItem key={idx}>
-                            <div className="p-3.5 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-xs font-mono text-emerald-300 font-medium">
-                              ✓ {imp}
+                            <div className="px-3 py-2 rounded-lg bg-emerald-950/25 border border-emerald-500/15 text-xs text-emerald-300/90">
+                              {imp}
                             </div>
                           </StaggerItem>
                         ))}
@@ -94,14 +74,10 @@ export const Experience: React.FC = () => {
                     </div>
                   </div>
 
-                  {/* Technologies strip */}
-                  <div className="pt-4 border-t border-white/10 flex flex-wrap items-center gap-2 font-mono text-xs">
-                    <span className="text-[10px] text-editorial-dim uppercase tracking-wider mr-1">FOCUS:</span>
+                  {/* Tech tags */}
+                  <div className="flex flex-wrap gap-1.5 pt-2 border-t border-white/6">
                     {exp.technologies.map((t) => (
-                      <span
-                        key={t}
-                        className="px-3 py-1 rounded bg-white/[0.03] text-editorial-muted border border-white/5 text-[11px]"
-                      >
+                      <span key={t} className="px-2.5 py-1 rounded text-xs text-editorial-dim border border-white/6 bg-white/[0.02]">
                         {t}
                       </span>
                     ))}
