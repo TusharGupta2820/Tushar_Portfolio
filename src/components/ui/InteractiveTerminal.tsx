@@ -329,8 +329,8 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
         <div
           className={`fixed z-50 transition-all duration-300 ${
             isExpanded
-              ? 'inset-4 sm:inset-10'
-              : 'bottom-20 right-4 sm:right-6 w-[94vw] sm:w-[540px] md:w-[620px] h-[480px]'
+              ? 'inset-3 sm:inset-6 md:inset-10'
+              : 'bottom-20 right-3 sm:right-6 w-[calc(100vw-24px)] sm:w-[540px] md:w-[620px] h-[480px] max-h-[75vh]'
           } rounded-3xl border border-brand-blue/30 bg-[#080a12]/95 backdrop-blur-xl shadow-2xl shadow-black/80 overflow-hidden font-mono flex flex-col`}
         >
           {/* Terminal Title Bar */}

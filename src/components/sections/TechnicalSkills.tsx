@@ -51,7 +51,7 @@ export const TechnicalSkills: React.FC = () => {
         </div>
 
         {/* Category Tabs */}
-        <div className="flex flex-wrap gap-2.5 font-mono text-xs">
+        <div className="flex items-center gap-2 font-mono text-xs overflow-x-auto pb-2 -mx-2 px-2 scrollbar-none sm:flex-wrap">
           {categories.map((cat) => {
             const isSelected = activeCategory === cat.id;
             return (
@@ -61,7 +61,7 @@ export const TechnicalSkills: React.FC = () => {
                   soundFx.playClick(650);
                   setActiveCategory(cat.id);
                 }}
-                className={`px-4 py-2.5 rounded-xl border transition-all flex items-center gap-2 ${
+                className={`px-4 py-2.5 rounded-xl border transition-all flex items-center gap-2 whitespace-nowrap shrink-0 ${
                   isSelected
                     ? 'bg-brand-blue text-white border-brand-blue shadow-lg shadow-brand-blue/20 font-bold'
                     : 'bg-white/[0.02] border-white/10 text-editorial-muted hover:text-white hover:bg-white/[0.05]'

@@ -65,9 +65,9 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
           </div>
         </div>
 
-        {/* Category Filter Filter Bar */}
-        <div className="flex flex-wrap items-center gap-2 font-mono text-xs">
-          <span className="text-editorial-dim text-[11px] uppercase tracking-wider mr-2 flex items-center gap-1.5">
+        {/* Category Filter Bar */}
+        <div className="flex items-center gap-2 font-mono text-xs overflow-x-auto pb-2 -mx-2 px-2 scrollbar-none sm:flex-wrap">
+          <span className="text-editorial-dim text-[11px] uppercase tracking-wider mr-1 flex items-center gap-1.5 shrink-0">
             <Filter className="w-3.5 h-3.5 text-brand-electric" /> FILTER:
           </span>
           {categories.map((cat) => {
@@ -79,7 +79,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                   soundFx.playClick(650);
                   setSelectedCategory(cat);
                 }}
-                className={`px-3.5 py-1.5 rounded-lg border transition-all ${
+                className={`px-3.5 py-1.5 rounded-lg border transition-all whitespace-nowrap shrink-0 ${
                   isActive
                     ? 'bg-brand-blue text-white border-brand-blue font-bold shadow-md shadow-brand-blue/20'
                     : 'bg-white/[0.02] border-white/10 text-editorial-muted hover:text-white hover:bg-white/[0.05]'
