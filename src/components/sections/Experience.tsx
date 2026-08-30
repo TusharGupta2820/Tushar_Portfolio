@@ -1,7 +1,7 @@
 import React from 'react';
 import { EXPERIENCES } from '../../data/portfolioData';
 import { Briefcase, Calendar, MapPin, CheckCircle2, TrendingUp } from 'lucide-react';
-import { FadeUp, SlideIn, StaggerContainer, StaggerItem, FloatCard } from '../ui/Animations';
+import { SlideIn, StaggerContainer, StaggerItem, FloatCard } from '../ui/Animations';
 
 export const Experience: React.FC = () => {
   return (

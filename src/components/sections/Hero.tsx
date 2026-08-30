@@ -4,7 +4,7 @@ import { HeroPortrait } from '../ui/HeroPortrait';
 import { ArrowRight, FileText, MapPin, Sparkles, FolderGit2, FlaskConical, Code, Briefcase, Wrench, UserCheck } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../ui/Icons';
 import { soundFx } from '../../utils/audio';
-import { FadeUp, SlideIn, StaggerContainer, StaggerItem, ScaleUp, Counter, FloatCard } from '../ui/Animations';
+import { FadeUp, SlideIn, StaggerContainer, StaggerItem, Counter, FloatCard } from '../ui/Animations';
 
 interface HeroProps {
   onOpenResumeModal: () => void;

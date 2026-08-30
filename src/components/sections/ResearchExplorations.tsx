@@ -3,7 +3,7 @@ import { RESEARCH_TOPICS, CURRENTLY_EXPLORING } from '../../data/portfolioData';
 import { FlaskConical, ArrowRight, Sparkles, HelpCircle } from 'lucide-react';
 import { soundFx } from '../../utils/audio';
 import { ModelBenchmarkingLab } from '../interactive/ModelBenchmarkingLab';
-import { SlideIn, StaggerContainer, StaggerItem, FadeUp, FloatCard } from '../ui/Animations';
+import { SlideIn, StaggerContainer, StaggerItem, FloatCard } from '../ui/Animations';
 
 interface ResearchExplorationsProps {
   onSelectResearch: (topicId: string) => void;

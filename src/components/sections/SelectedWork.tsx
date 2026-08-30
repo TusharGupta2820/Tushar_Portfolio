@@ -4,7 +4,7 @@ import { DroneTacticalMap } from '../3d/DroneTacticalMap';
 import { ArrowRight, Layers, CheckCircle, ExternalLink, Sparkles, Filter } from 'lucide-react';
 import { GithubIcon } from '../ui/Icons';
 import { soundFx } from '../../utils/audio';
-import { FadeUp, SlideIn, StaggerContainer, StaggerItem } from '../ui/Animations';
+import { SlideIn, StaggerContainer, StaggerItem } from '../ui/Animations';
 
 interface SelectedWorkProps {
   onSelectProject: (projectId: string) => void;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { EDUCATION, HACKATHONS, EXTRACURRICULAR, CERTIFICATIONS } from '../../data/portfolioData';
 import { GraduationCap, Trophy, Award, Users, CheckCircle, BookOpen } from 'lucide-react';
-import { FadeUp, SlideIn, StaggerContainer, StaggerItem, ScaleUp, FloatCard } from '../ui/Animations';
+import { FadeUp, SlideIn, StaggerContainer, StaggerItem, FloatCard } from '../ui/Animations';
 
 export const EducationAndHackathons: React.FC = () => {
   return (
