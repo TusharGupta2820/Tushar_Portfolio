@@ -99,7 +99,7 @@ export const PERSONAL_INFO = {
 
 export const KEY_NUMBERS = [
   { value: "8.9", label: "CGPA", context: "University of Mumbai" },
-  { value: "15+", label: "National Hackathons", context: "1st Prize Yuva AI Summit" },
+  { value: "15+", label: "National Hackathons", context: "National Finalist & Winner" },
   { value: "4", label: "Internships Completed", context: "AI, Full-Stack & Systems" },
   { value: "16", label: "Repositories & Systems", context: "AI, Vision, Cloud & Web" },
   { value: "2023—27", label: "B.E. Info Tech", context: "TCET Engineering" },
@@ -177,11 +177,11 @@ export const PROJECTS: ProjectItem[] = [
     number: "01",
     title: "GyaanSetu AI",
     subtitle: "Bridging Knowledge Through Personalized Multimodal Learning",
-    label: "FINAL YEAR CAPSTONE & 1ST PRIZE YUVA AI SUMMIT",
+    label: "FINAL YEAR PROJECT",
     category: "AI & Education",
     technologies: ["React", "TypeScript", "FastAPI", "Python", "Ollama", "Llama 3.1", "DeepSeek R1", "Whisper", "PaddleOCR", "ChromaDB"],
     description: "Multilingual personalized AI learning platform with adaptive study plans, doubt resolution, and OCR/voice-based content ingestion running on localized LLM runtimes.",
-    impact: "1st Prize Winner @ Yuva AI Impact Summit & Official Final Year Capstone Project",
+    impact: "Official Final Year Capstone Project at TCET, University of Mumbai",
     architectureNodes: ["Student Client", "FastAPI Gateway", "Multimodal Ingestion", "ChromaDB Vector Store", "Local LLM Inference (Ollama)", "Adaptive Delivery"],
     keyCapabilities: [
       "Multilingual learning across Indian regional languages",
@@ -216,7 +216,7 @@ export const PROJECTS: ProjectItem[] = [
         "End-to-end multimodal query response pipeline with localized OCR and Voice input",
         "Seamless zero-data-leakage architecture operating entirely on local LLM runtimes",
         "Selected as Capstone Final Year Project at TCET, University of Mumbai",
-        "Won 1st Prize at the National Yuva AI Impact Summit"
+        "Comprehensive localized tutoring delivery with sub-second token streaming"
       ],
       learnings: "Mastered retrieval augmented generation with local vector stores, edge model quantization tradeoffs, and async stream processing in FastAPI.",
       futureWork: "Exploring fine-tuning domain-specific Indic adapters and real-time interactive voice-to-voice turn taking."
