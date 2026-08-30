@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { LoadingSequence } from './components/ui/LoadingSequence';
 import { CustomCursor } from './components/ui/CustomCursor';
 import { Navigation } from './components/ui/Navigation';
@@ -7,6 +8,7 @@ import { ResumeModal } from './components/ui/ResumeModal';
 import { CaseStudyModal } from './components/modals/CaseStudyModal';
 import { ResearchNoteModal } from './components/modals/ResearchNoteModal';
 import { InteractiveTerminal } from './components/ui/InteractiveTerminal';
+import { SectionTransition } from './components/ui/Animations';
 
 import { Hero } from './components/sections/Hero';
 import { SelectedWork } from './components/sections/SelectedWork';
@@ -87,78 +89,74 @@ export function App() {
 
       {/* Main Single-Section Content Area */}
       <main className="relative z-10 w-full pt-16">
-        {/* OVERVIEW SECTION */}
-        {activeSection === 'overview' && (
-          <div className="animate-in fade-in duration-300">
-            <Hero
-              onOpenResumeModal={() => setResumeModalOpen(true)}
-              onNavigate={handleSelectSection}
-            />
-          </div>
-        )}
+        <AnimatePresence mode="wait">
+          {activeSection === 'overview' && (
+            <SectionTransition key="overview">
+              <Hero
+                onOpenResumeModal={() => setResumeModalOpen(true)}
+                onNavigate={handleSelectSection}
+              />
+            </SectionTransition>
+          )}
 
-        {/* WORK SECTION */}
-        {activeSection === 'work' && (
-          <div className="animate-in fade-in duration-300">
-            <SelectedWork onSelectProject={handleSelectProject} />
-          </div>
-        )}
+          {activeSection === 'work' && (
+            <SectionTransition key="work">
+              <SelectedWork onSelectProject={handleSelectProject} />
+            </SectionTransition>
+          )}
 
-        {/* RESEARCH SECTION */}
-        {activeSection === 'research' && (
-          <div className="animate-in fade-in duration-300">
-            <ResearchExplorations onSelectResearch={handleSelectResearch} />
-          </div>
-        )}
+          {activeSection === 'research' && (
+            <SectionTransition key="research">
+              <ResearchExplorations onSelectResearch={handleSelectResearch} />
+            </SectionTransition>
+          )}
 
-        {/* SYSTEMS SECTION */}
-        {activeSection === 'systems' && (
-          <section id="systems" className="py-24 sm:py-32 relative w-full animate-in fade-in duration-300">
-            <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-6">
-              <div className="max-w-3xl space-y-2">
-                <span className="font-mono text-xs text-brand-electric font-semibold tracking-wider">
-                  CORE COMPUTATIONAL TOPOLOGIES
-                </span>
-                <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
-                  SYSTEMS I BUILD
-                </h2>
-                <p className="text-base sm:text-lg text-editorial-muted font-sans font-light">
-                  From frontend component orchestration to high-throughput async gateways, distributed telemetry, and local model inference.
-                </p>
-              </div>
-              <SystemsLab3D />
-            </div>
-          </section>
-        )}
+          {activeSection === 'systems' && (
+            <SectionTransition key="systems">
+              <section id="systems" className="py-24 sm:py-32 relative w-full">
+                <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-6">
+                  <div className="max-w-3xl space-y-2">
+                    <span className="font-mono text-xs text-brand-electric font-semibold tracking-wider">
+                      CORE COMPUTATIONAL TOPOLOGIES
+                    </span>
+                    <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-white tracking-tight">
+                      SYSTEMS I BUILD
+                    </h2>
+                    <p className="text-base sm:text-lg text-editorial-muted font-sans font-light">
+                      From frontend component orchestration to high-throughput async gateways, distributed telemetry, and local model inference.
+                    </p>
+                  </div>
+                  <SystemsLab3D />
+                </div>
+              </section>
+            </SectionTransition>
+          )}
 
-        {/* EXPERIENCE SECTION */}
-        {activeSection === 'experience' && (
-          <div className="animate-in fade-in duration-300">
-            <Experience />
-          </div>
-        )}
+          {activeSection === 'experience' && (
+            <SectionTransition key="experience">
+              <Experience />
+            </SectionTransition>
+          )}
 
-        {/* SKILLS SECTION */}
-        {activeSection === 'skills' && (
-          <div className="animate-in fade-in duration-300">
-            <TechnicalSkills />
-          </div>
-        )}
+          {activeSection === 'skills' && (
+            <SectionTransition key="skills">
+              <TechnicalSkills />
+            </SectionTransition>
+          )}
 
-        {/* ABOUT & PROOF OF WORK SECTION */}
-        {activeSection === 'about' && (
-          <div className="animate-in fade-in duration-300">
-            <OpenSourceAndAbout />
-            <EducationAndHackathons />
-          </div>
-        )}
+          {activeSection === 'about' && (
+            <SectionTransition key="about">
+              <OpenSourceAndAbout />
+              <EducationAndHackathons />
+            </SectionTransition>
+          )}
 
-        {/* CONTACT SECTION */}
-        {activeSection === 'contact' && (
-          <div className="animate-in fade-in duration-300">
-            <ContactAndFooter />
-          </div>
-        )}
+          {activeSection === 'contact' && (
+            <SectionTransition key="contact">
+              <ContactAndFooter />
+            </SectionTransition>
+          )}
+        </AnimatePresence>
       </main>
 
       {/* Interactive Developer REPL Terminal */}

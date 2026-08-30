@@ -4,6 +4,7 @@ import { Mail, Phone, MapPin, Send, CheckCircle2, ArrowUpRight, Sparkles, Copy, 
 import { GithubIcon, LinkedinIcon } from '../ui/Icons';
 import { soundFx } from '../../utils/audio';
 import confetti from 'canvas-confetti';
+import { FadeUp, SlideIn, StaggerContainer, StaggerItem } from '../ui/Animations';
 
 export const ContactAndFooter: React.FC = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });

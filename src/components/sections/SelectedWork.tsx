@@ -4,6 +4,7 @@ import { DroneTacticalMap } from '../3d/DroneTacticalMap';
 import { ArrowRight, Layers, CheckCircle, ExternalLink, Sparkles, Filter } from 'lucide-react';
 import { GithubIcon } from '../ui/Icons';
 import { soundFx } from '../../utils/audio';
+import { FadeUp, SlideIn, StaggerContainer, StaggerItem } from '../ui/Animations';
 
 interface SelectedWorkProps {
   onSelectProject: (projectId: string) => void;
@@ -34,7 +35,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
 
       <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-16 relative z-10">
         {/* Section Header */}
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
+        <SlideIn from="left" className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 border-b border-white/10 pb-8">
           <div className="max-w-3xl space-y-3">
             <div className="flex items-center gap-2 font-mono text-xs text-brand-electric font-semibold tracking-wider">
               <span className="w-2 h-2 rounded-full bg-brand-blue animate-pulse" />
@@ -63,7 +64,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
               <span>github.com/TusharGupta2820 ↗</span>
             </a>
           </div>
-        </div>
+        </SlideIn>
 
         {/* Category Filter Bar */}
         <div className="flex items-center gap-2 font-mono text-xs overflow-x-auto pb-2 -mx-2 px-2 scrollbar-none sm:flex-wrap">
@@ -92,14 +93,13 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
         </div>
 
         {/* Project Compositions List */}
-        <div className="space-y-16">
+        <StaggerContainer className="space-y-16" staggerDelay={0.1}>
           {filteredProjects.map((project) => {
             const isDroneProject = project.id === 'drone-fleet-management';
 
             return (
-              <div
+              <StaggerItem
                 key={project.id}
-                id={`project-${project.id}`}
                 className="relative scroll-mt-24"
               >
                 {/* Project Editorial Composition Container */}
@@ -271,10 +271,10 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                     </button>
                   </div>
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerContainer>
       </div>
     </section>
   );
