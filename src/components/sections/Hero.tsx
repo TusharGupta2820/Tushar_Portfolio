@@ -115,19 +115,19 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal, onNavigate }) => 
         </div>
 
         {/* Refined Key Numbers Metadata Strip */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 pt-10 border-t border-white/10 font-mono">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-4 pt-8 border-t border-white/10 font-mono">
           {KEY_NUMBERS.map((num, i) => (
             <div
               key={i}
-              className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-blue/30 transition-colors group"
+              className="p-3.5 sm:p-5 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-brand-blue/30 transition-colors group"
             >
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white group-hover:text-brand-electric transition-colors">
+              <div className="text-xl sm:text-3xl lg:text-4xl font-display font-extrabold text-white group-hover:text-brand-electric transition-colors">
                 {num.value}
               </div>
-              <div className="text-xs font-bold text-editorial-text mt-1.5">
+              <div className="text-[11px] sm:text-xs font-bold text-editorial-text mt-1">
                 {num.label}
               </div>
-              <div className="text-[10px] text-editorial-dim mt-0.5">
+              <div className="text-[9px] sm:text-[10px] text-editorial-dim mt-0.5">
                 {num.context}
               </div>
             </div>
@@ -135,13 +135,13 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal, onNavigate }) => 
         </div>
 
         {/* Section Quick-Jump Hub on Overview Screen */}
-        <div className="space-y-4 pt-6">
-          <div className="font-mono text-xs text-editorial-dim uppercase tracking-wider flex items-center gap-2">
+        <div className="space-y-3 sm:space-y-4 pt-4 sm:pt-6">
+          <div className="font-mono text-[11px] sm:text-xs text-editorial-dim uppercase tracking-wider flex items-center gap-2">
             <Sparkles className="w-3.5 h-3.5 text-brand-electric" />
             <span>DIRECT PORTFOLIO GATEWAYS // CLICK TO OPEN</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3.5 font-mono text-xs">
+          <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 sm:gap-3.5 font-mono text-xs">
             <button
               onClick={() => handleNav('work')}
               className="p-4 rounded-xl bg-[#0d0f18] hover:bg-brand-blue/15 border border-white/10 hover:border-brand-electric text-left transition-all group shadow-md"
