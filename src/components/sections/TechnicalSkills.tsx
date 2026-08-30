@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TECHNICAL_SKILLS } from '../../data/portfolioData';
 import { Code, Terminal, Cpu, Database, Wrench, Sparkles, Search, Layers, HeartHandshake } from 'lucide-react';
+import { SkillLogo } from '../ui/SkillLogo';
 import { soundFx } from '../../utils/audio';
 
 export const TechnicalSkills: React.FC = () => {
@@ -88,11 +89,16 @@ export const TechnicalSkills: React.FC = () => {
                   .map((lang) => (
                     <div
                       key={lang.name}
-                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1.5"
+                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-2 group"
                     >
-                      <div className="flex items-center justify-between">
-                        <span className="font-mono font-bold text-white text-sm">{lang.name}</span>
-                        <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 text-editorial-dim">
+                      <div className="flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2.5">
+                          <div className="p-1.5 rounded-lg bg-white/[0.04] border border-white/5 group-hover:scale-110 transition-transform">
+                            <SkillLogo name={lang.name} className="w-5 h-5" />
+                          </div>
+                          <span className="font-mono font-bold text-white text-sm">{lang.name}</span>
+                        </div>
+                        <span className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/5 text-editorial-dim shrink-0">
                           {lang.level}
                         </span>
                       </div>
@@ -115,9 +121,14 @@ export const TechnicalSkills: React.FC = () => {
                   .map((item) => (
                     <div
                       key={item.name}
-                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1.5"
+                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-2 group"
                     >
-                      <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-1.5 rounded-lg bg-white/[0.04] border border-white/5 group-hover:scale-110 transition-transform">
+                          <SkillLogo name={item.name} className="w-5 h-5" />
+                        </div>
+                        <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      </div>
                       <p className="text-xs text-editorial-muted font-sans leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
@@ -137,9 +148,14 @@ export const TechnicalSkills: React.FC = () => {
                   .map((item) => (
                     <div
                       key={item.name}
-                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1.5"
+                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-2 group"
                     >
-                      <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-1.5 rounded-lg bg-white/[0.04] border border-white/5 group-hover:scale-110 transition-transform">
+                          <SkillLogo name={item.name} className="w-5 h-5" />
+                        </div>
+                        <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      </div>
                       <p className="text-xs text-editorial-muted font-sans leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
@@ -159,9 +175,14 @@ export const TechnicalSkills: React.FC = () => {
                   .map((item) => (
                     <div
                       key={item.name}
-                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1.5"
+                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-2 group"
                     >
-                      <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-1.5 rounded-lg bg-white/[0.04] border border-white/5 group-hover:scale-110 transition-transform">
+                          <SkillLogo name={item.name} className="w-5 h-5" />
+                        </div>
+                        <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      </div>
                       <p className="text-xs text-editorial-muted font-sans leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
@@ -181,9 +202,14 @@ export const TechnicalSkills: React.FC = () => {
                   .map((item) => (
                     <div
                       key={item.name}
-                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1.5"
+                      className="p-5 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-2 group"
                     >
-                      <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      <div className="flex items-center gap-2.5">
+                        <div className="p-1.5 rounded-lg bg-white/[0.04] border border-white/5 group-hover:scale-110 transition-transform">
+                          <SkillLogo name={item.name} className="w-5 h-5" />
+                        </div>
+                        <span className="font-mono font-bold text-white text-sm">{item.name}</span>
+                      </div>
                       <p className="text-xs text-editorial-muted font-sans leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
@@ -203,9 +229,14 @@ export const TechnicalSkills: React.FC = () => {
                   .map((item) => (
                     <div
                       key={item.name}
-                      className="p-4 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1"
+                      className="p-4 rounded-2xl bg-[#090b12] border border-white/5 hover:border-brand-blue/30 transition-colors space-y-1.5 group"
                     >
-                      <span className="font-mono font-bold text-brand-electric text-xs">{item.name}</span>
+                      <div className="flex items-center gap-2">
+                        <div className="p-1.5 rounded-lg bg-white/[0.04] border border-white/5 group-hover:scale-110 transition-transform">
+                          <SkillLogo name={item.name} className="w-4 h-4" />
+                        </div>
+                        <span className="font-mono font-bold text-brand-electric text-xs">{item.name}</span>
+                      </div>
                       <p className="text-[11px] text-editorial-muted font-sans leading-relaxed">{item.desc}</p>
                     </div>
                   ))}
