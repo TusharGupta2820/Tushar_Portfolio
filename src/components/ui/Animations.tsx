@@ -1,8 +1,8 @@
 import React from 'react';
-import { motion, useInView, useReducedMotion } from 'framer-motion';
+import { motion, useInView, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 
 // ─────────────────────────────────────────────────────────
-// SHARED EASING CURVES
+// SHARED EASING CURVES & PHYSICS
 // ─────────────────────────────────────────────────────────
 export const ease = {
   out: [0.16, 1, 0.3, 1] as [number, number, number, number],
@@ -12,7 +12,78 @@ export const ease = {
 };
 
 // ─────────────────────────────────────────────────────────
-// FADE UP — Most common scroll reveal
+// SCROLL PROGRESS BAR — Subtle 3D gradient line along top
+// ─────────────────────────────────────────────────────────
+export const ScrollProgressBar: React.FC = () => {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001,
+  });
+
+  return (
+    <motion.div
+      style={{ scaleX }}
+      className="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-brand-electric via-brand-blue to-violet-500 z-50 origin-left pointer-events-none"
+    />
+  );
+};
+
+// ─────────────────────────────────────────────────────────
+// SCROLL 3D REVEAL — 3D Perspective entrance on scroll
+// ─────────────────────────────────────────────────────────
+interface Scroll3DRevealProps {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+  distance?: number;
+  tiltAngle?: number;
+}
+
+export const Scroll3DReveal: React.FC<Scroll3DRevealProps> = ({
+  children,
+  delay = 0,
+  className = '',
+  distance = 40,
+  tiltAngle = 8,
+}) => {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const prefersReduced = useReducedMotion();
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
+      initial={{
+        opacity: 0,
+        y: prefersReduced ? 0 : distance,
+        rotateX: prefersReduced ? 0 : tiltAngle,
+      }}
+      animate={
+        isInView
+          ? {
+              opacity: 1,
+              y: 0,
+              rotateX: 0,
+            }
+          : {}
+      }
+      transition={{
+        duration: 0.8,
+        delay,
+        ease: ease.out,
+      }}
+    >
+      {children}
+    </motion.div>
+  );
+};
+
+// ─────────────────────────────────────────────────────────
+// FADE UP — Smooth upward reveal
 // ─────────────────────────────────────────────────────────
 interface FadeUpProps {
   children: React.ReactNode;
@@ -26,11 +97,11 @@ export const FadeUp: React.FC<FadeUpProps> = ({
   children,
   delay = 0,
   className = '',
-  distance = 32,
+  distance = 30,
   duration = 0.65,
 }) => {
   const ref = React.useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: '-60px' });
+  const isInView = useInView(ref, { once: true, margin: '-50px' });
   const prefersReduced = useReducedMotion();
 
   return (
@@ -47,7 +118,7 @@ export const FadeUp: React.FC<FadeUpProps> = ({
 };
 
 // ─────────────────────────────────────────────────────────
-// FADE IN (no vertical shift)
+// FADE IN (opacity only)
 // ─────────────────────────────────────────────────────────
 interface FadeInProps {
   children: React.ReactNode;
@@ -73,7 +144,7 @@ export const FadeIn: React.FC<FadeInProps> = ({ children, delay = 0, className =
 };
 
 // ─────────────────────────────────────────────────────────
-// STAGGER CONTAINER — animates children in sequence
+// STAGGER CONTAINER — Sequenced children animation
 // ─────────────────────────────────────────────────────────
 interface StaggerContainerProps {
   children: React.ReactNode;
@@ -116,7 +187,7 @@ export const StaggerContainer: React.FC<StaggerContainerProps> = ({
 };
 
 // ─────────────────────────────────────────────────────────
-// STAGGER ITEM — used inside StaggerContainer
+// STAGGER ITEM — Used inside StaggerContainer
 // ─────────────────────────────────────────────────────────
 interface StaggerItemProps {
   children: React.ReactNode;
@@ -126,7 +197,7 @@ interface StaggerItemProps {
 export const StaggerItem: React.FC<StaggerItemProps> = ({ children, className = '' }) => {
   const prefersReduced = useReducedMotion();
   const item = {
-    hidden: { opacity: 0, y: prefersReduced ? 0 : 24 },
+    hidden: { opacity: 0, y: prefersReduced ? 0 : 20 },
     show: {
       opacity: 1,
       y: 0,
@@ -160,7 +231,7 @@ export const SlideIn: React.FC<SlideInProps> = ({ children, from = 'left', delay
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, x: prefersReduced ? 0 : (from === 'left' ? -40 : 40) }}
+      initial={{ opacity: 0, x: prefersReduced ? 0 : (from === 'left' ? -35 : 35) }}
       animate={isInView ? { opacity: 1, x: 0 } : {}}
       transition={{ duration: 0.65, delay, ease: ease.out }}
     >
@@ -170,7 +241,7 @@ export const SlideIn: React.FC<SlideInProps> = ({ children, from = 'left', delay
 };
 
 // ─────────────────────────────────────────────────────────
-// SCALE UP (pop in)
+// SCALE UP (Pop in)
 // ─────────────────────────────────────────────────────────
 interface ScaleUpProps {
   children: React.ReactNode;
@@ -187,9 +258,9 @@ export const ScaleUp: React.FC<ScaleUpProps> = ({ children, delay = 0, className
     <motion.div
       ref={ref}
       className={className}
-      initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.88 }}
+      initial={{ opacity: 0, scale: prefersReduced ? 1 : 0.92 }}
       animate={isInView ? { opacity: 1, scale: 1 } : {}}
-      transition={{ duration: 0.55, delay, ease: ease.out }}
+      transition={{ duration: 0.5, delay, ease: ease.out }}
     >
       {children}
     </motion.div>
@@ -197,7 +268,7 @@ export const ScaleUp: React.FC<ScaleUpProps> = ({ children, delay = 0, className
 };
 
 // ─────────────────────────────────────────────────────────
-// FLOAT CARD — 3D perspective tilt on hover
+// FLOAT CARD — 3D perspective tilt on hover with glare
 // ─────────────────────────────────────────────────────────
 interface FloatCardProps {
   children: React.ReactNode;
@@ -205,7 +276,7 @@ interface FloatCardProps {
   intensity?: number;
 }
 
-export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', intensity = 8 }) => {
+export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', intensity = 7 }) => {
   const prefersReduced = useReducedMotion();
   const [tilt, setTilt] = React.useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = React.useState(false);
@@ -226,11 +297,11 @@ export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', 
   return (
     <motion.div
       className={className}
-      style={{ transformStyle: 'preserve-3d', perspective: 800 }}
+      style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
       animate={{
         rotateX: tilt.y,
         rotateY: tilt.x,
-        scale: isHovered ? 1.025 : 1,
+        scale: isHovered ? 1.015 : 1,
       }}
       transition={ease.springLight}
       onMouseMove={handleMouseMove}
@@ -243,7 +314,7 @@ export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', 
 };
 
 // ─────────────────────────────────────────────────────────
-// SECTION TRANSITION — full-page cinematic entrance
+// SECTION TRANSITION — Full page wrapper
 // ─────────────────────────────────────────────────────────
 interface SectionTransitionProps {
   children: React.ReactNode;
@@ -266,7 +337,7 @@ export const SectionTransition: React.FC<SectionTransitionProps> = ({ children, 
 };
 
 // ─────────────────────────────────────────────────────────
-// COUNTER — animated number counter on scroll
+// COUNTER — Animated counter on scroll
 // ─────────────────────────────────────────────────────────
 interface CounterProps {
   value: string;
@@ -277,7 +348,6 @@ export const Counter: React.FC<CounterProps> = ({ value, className = '' }) => {
   const ref = React.useRef<HTMLSpanElement>(null);
   const isInView = useInView(ref, { once: true });
 
-  // Extract numeric suffix (e.g. "16" → 16, "8.9" → 8.9, "15+" → 15)
   const num = parseFloat(value.replace(/[^0-9.]/g, ''));
   const suffix = value.replace(/[0-9.]/g, '');
   const [display, setDisplay] = React.useState('0');

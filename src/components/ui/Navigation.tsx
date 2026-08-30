@@ -40,8 +40,8 @@ export const Navigation: React.FC<NavigationProps> = ({
   const navLinks = [
     { id: 'overview', label: 'Home' },
     { id: 'work',     label: 'Work' },
-    { id: 'research', label: 'Research' },
     { id: 'systems',  label: 'Systems' },
+    { id: 'research', label: 'Research' },
     { id: 'experience', label: 'Experience' },
     { id: 'skills',   label: 'Skills' },
     { id: 'about',    label: 'About' },
@@ -52,7 +52,17 @@ export const Navigation: React.FC<NavigationProps> = ({
     soundFx.playClick(650);
     setMobileMenuOpen(false);
     onSelectSection(id);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    if (id === 'overview') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      const el = document.getElementById(id);
+      if (el) {
+        const yOffset = -70;
+        const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }
   };
 
   return (
@@ -66,7 +76,7 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 flex items-center justify-between">
 
-          {/* Brand — clean wordmark */}
+          {/* Brand */}
           <div className="flex items-center gap-4">
             <button
               onClick={() => handleLinkClick('overview')}
@@ -77,14 +87,14 @@ export const Navigation: React.FC<NavigationProps> = ({
               </span>
             </button>
 
-            {/* Availability pill — xl only, understated */}
+            {/* Availability pill */}
             <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/10 font-mono text-[10px] text-editorial-dim">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80" />
               <span>Open to work</span>
             </div>
           </div>
 
-          {/* Desktop nav — sentence case, clean underline, no glow */}
+          {/* Desktop nav */}
           <nav className="hidden lg:flex items-center gap-1 text-sm">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
@@ -99,7 +109,6 @@ export const Navigation: React.FC<NavigationProps> = ({
                   }`}
                 >
                   <span>{link.label}</span>
-                  {/* Thin underline — no glow */}
                   {isActive && (
                     <span className="absolute bottom-0.5 left-3 right-3 h-[1.5px] rounded-full bg-brand-electric/70" />
                   )}
@@ -124,7 +133,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               </button>
             )}
 
-            {/* Resume button — subtle */}
+            {/* Resume button */}
             <button
               onClick={() => { soundFx.playBlip(750); onOpenResumeModal(); }}
               className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-white/12 text-sm text-editorial-dim hover:text-white hover:border-white/25 transition-all font-medium"
@@ -166,10 +175,9 @@ export const Navigation: React.FC<NavigationProps> = ({
           </div>
         </div>
 
-        {/* Mobile menu — clean, sentence case */}
+        {/* Mobile menu */}
         {mobileMenuOpen && (
           <div className="lg:hidden bg-[#0a0a0f]/98 backdrop-blur-xl border-t border-white/8 px-6 py-5 flex flex-col gap-1 animate-in slide-in-from-top-3 duration-200">
-            {/* Status row */}
             <div className="flex items-center justify-between pb-3 mb-1 border-b border-white/8 text-xs text-editorial-dim">
               <div className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80" />
