@@ -396,3 +396,34 @@ export const Counter: React.FC<CounterProps> = ({ value, className = '' }) => {
     </motion.span>
   );
 };
+
+// ─────────────────────────────────────────────────────────
+// TRANSITION WIPE — 3-Layer Colored Slide Page Transition
+// ─────────────────────────────────────────────────────────
+export const TransitionWipe: React.FC = () => {
+  return (
+    <>
+      <motion.div
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-50 bg-[#1e1b4b]"
+        initial={{ x: '100%', width: '100%' }}
+        animate={{ x: '0%', width: '0%' }}
+        exit={{ x: ['0%', '100%'], width: ['0%', '100%'] }}
+        transition={{ duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
+      />
+      <motion.div
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-40 bg-[#2563eb]"
+        initial={{ x: '100%', width: '100%' }}
+        animate={{ x: '0%', width: '0%' }}
+        exit={{ x: ['0%', '100%'], width: ['0%', '100%'] }}
+        transition={{ delay: 0.08, duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
+      />
+      <motion.div
+        className="fixed top-0 bottom-0 right-full w-screen h-screen z-30 bg-[#3b82f6]"
+        initial={{ x: '100%', width: '100%' }}
+        animate={{ x: '0%', width: '0%' }}
+        exit={{ x: ['0%', '100%'], width: ['0%', '100%'] }}
+        transition={{ delay: 0.16, duration: 0.5, ease: [0.65, 0, 0.35, 1] }}
+      />
+    </>
+  );
+};

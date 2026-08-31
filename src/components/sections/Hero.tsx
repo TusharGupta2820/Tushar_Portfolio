@@ -1,6 +1,7 @@
 import React from 'react';
 import { PERSONAL_INFO, KEY_NUMBERS } from '../../data/portfolioData';
 import { HeroPortrait } from '../ui/HeroPortrait';
+import { SpinningTextBadge } from '../ui/SpinningTextBadge';
 import { ArrowRight, FileText, MapPin } from 'lucide-react';
 import { GithubIcon, LinkedinIcon } from '../ui/Icons';
 import { soundFx } from '../../utils/audio';
@@ -64,42 +65,49 @@ export const Hero: React.FC<HeroProps> = ({ onOpenResumeModal, onNavigate }) => 
             </div>
 
             {/* Actions */}
-            <FadeUp delay={0.2} className="flex flex-wrap items-center gap-3">
-              <button
-                onClick={() => handleNav('work')}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-white text-sm font-bold transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-brand-blue/30"
-              >
-                <span>View my work</span>
-                <ArrowRight className="w-4 h-4" />
-              </button>
+            <FadeUp delay={0.2} className="flex flex-wrap items-center gap-4 sm:gap-6">
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  onClick={() => handleNav('work')}
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-brand-blue hover:bg-brand-cobalt text-white text-sm font-bold transition-all hover:scale-[1.02] active:scale-95 shadow-lg shadow-brand-blue/35"
+                >
+                  <span>View my work</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
 
-              <button
-                onClick={() => { soundFx.playBlip(800); onOpenResumeModal(); }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg border border-white/20 bg-white/5 text-sm text-white hover:border-white/40 hover:bg-white/10 transition-all font-semibold"
-              >
-                <FileText className="w-4 h-4 text-brand-electric" />
-                <span>Résumé</span>
-              </button>
+                <button
+                  onClick={() => { soundFx.playBlip(800); onOpenResumeModal(); }}
+                  className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border border-white/20 bg-white/5 text-sm text-white hover:border-white/40 hover:bg-white/10 transition-all font-semibold"
+                >
+                  <FileText className="w-4 h-4 text-brand-electric" />
+                  <span>Résumé</span>
+                </button>
 
-              <a
-                href={PERSONAL_INFO.github}
-                target="_blank" rel="noreferrer"
-                onClick={() => soundFx.playClick(700)}
-                className="p-2.5 rounded-lg border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10 transition-all"
-                title="GitHub"
-              >
-                <GithubIcon className="w-4 h-4" />
-              </a>
+                <a
+                  href={PERSONAL_INFO.github}
+                  target="_blank" rel="noreferrer"
+                  onClick={() => soundFx.playClick(700)}
+                  className="p-3 rounded-xl border border-white/15 bg-white/5 text-white hover:border-white/30 hover:bg-white/10 transition-all"
+                  title="GitHub"
+                >
+                  <GithubIcon className="w-4 h-4" />
+                </a>
 
-              <a
-                href={PERSONAL_INFO.linkedin}
-                target="_blank" rel="noreferrer"
-                onClick={() => soundFx.playClick(700)}
-                className="p-2.5 rounded-lg border border-white/15 bg-white/5 text-white hover:text-brand-electric hover:border-white/30 hover:bg-white/10 transition-all"
-                title="LinkedIn"
-              >
-                <LinkedinIcon className="w-4 h-4" />
-              </a>
+                <a
+                  href={PERSONAL_INFO.linkedin}
+                  target="_blank" rel="noreferrer"
+                  onClick={() => soundFx.playClick(700)}
+                  className="p-3 rounded-xl border border-white/15 bg-white/5 text-white hover:text-brand-electric hover:border-white/30 hover:bg-white/10 transition-all"
+                  title="LinkedIn"
+                >
+                  <LinkedinIcon className="w-4 h-4" />
+                </a>
+              </div>
+
+              {/* Spinning Circular Text Badge */}
+              <div className="hidden sm:block">
+                <SpinningTextBadge onClick={() => handleNav('work')} />
+              </div>
             </FadeUp>
           </SlideIn>
 

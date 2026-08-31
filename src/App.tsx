@@ -8,7 +8,7 @@ import { ResumeModal } from './components/ui/ResumeModal';
 import { CaseStudyModal } from './components/modals/CaseStudyModal';
 import { ResearchNoteModal } from './components/modals/ResearchNoteModal';
 import { InteractiveTerminal } from './components/ui/InteractiveTerminal';
-import { SectionTransition } from './components/ui/Animations';
+import { SectionTransition, TransitionWipe } from './components/ui/Animations';
 
 import { Hero } from './components/sections/Hero';
 import { SelectedWork } from './components/sections/SelectedWork';
@@ -93,9 +93,11 @@ export function App() {
         onToggleTheme={toggleTheme}
       />
 
-      {/* Section-Wise Content View with 3D Page Transitions */}
+      {/* Section-Wise Content View with Colored Transition Wipes & 3D Page Entrance */}
       <main className="relative z-10 w-full pt-16 min-h-[85vh]">
         <AnimatePresence mode="wait">
+          <TransitionWipe key={`wipe-${activeSection}`} />
+
           {/* OVERVIEW / HERO */}
           {activeSection === 'overview' && (
             <SectionTransition key="overview">
