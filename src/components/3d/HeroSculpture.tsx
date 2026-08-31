@@ -50,15 +50,25 @@ function NeuralPolytope({ mouse, mode, speed }: NeuralPolytopeProps) {
     return [positions, colors];
   }, [mode]);
 
-  useFrame((_, delta) => {
+  useFrame((state, delta) => {
     if (!meshRef.current) return;
 
-    // Smooth cursor tracking with dampening
-    const targetX = mouse.current[0] * 0.45;
-    const targetY = mouse.current[1] * 0.45;
+    // Smooth cursor tracking with math dampening
+    const targetX = mouse.current[0] * 0.5;
+    const targetY = mouse.current[1] * 0.5;
 
-    meshRef.current.rotation.y += (targetX - meshRef.current.rotation.y) * 0.05 + delta * 0.15 * speed;
-    meshRef.current.rotation.x += (-targetY - meshRef.current.rotation.x) * 0.05 + delta * 0.08 * speed;
+    meshRef.current.rotation.y = THREE.MathUtils.damp(
+      meshRef.current.rotation.y,
+      targetX + state.clock.elapsedTime * 0.12 * speed,
+      3.5,
+      delta
+    );
+    meshRef.current.rotation.x = THREE.MathUtils.damp(
+      meshRef.current.rotation.x,
+      -targetY,
+      3.5,
+      delta
+    );
 
     if (coreRef.current) {
       coreRef.current.rotation.y -= delta * 0.35 * speed;

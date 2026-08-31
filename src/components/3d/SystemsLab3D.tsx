@@ -96,16 +96,16 @@ export const SystemsLab3D: React.FC = () => {
                   }}
                   className={`w-full p-3.5 rounded-xl border transition-all text-left flex items-center justify-between ${
                     isSelected
-                      ? 'bg-brand-blue/15 border-brand-electric shadow-[0_0_20px_rgba(59,130,246,0.2)]'
+                      ? 'bg-brand-blue/25 border-brand-electric shadow-[0_0_20px_rgba(59,130,246,0.3)]'
                       : isFlowing
-                      ? 'bg-brand-electric/25 border-brand-electric animate-pulse'
+                      ? 'bg-brand-electric/30 border-brand-electric animate-pulse'
                       : isConnected
-                      ? 'bg-brand-violet/10 border-brand-violet/40 text-white'
-                      : 'bg-[#0d0f17]/90 border-white/5 text-editorial-muted hover:border-white/20 hover:bg-[#121522]'
+                      ? 'bg-brand-violet/20 border-brand-violet/50 text-white'
+                      : 'bg-[#0d0f17] border-white/15 text-slate-100 hover:border-white/30 hover:bg-[#121522]'
                   }`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="font-mono text-xs text-editorial-dim px-2 py-0.5 rounded bg-black/40 border border-white/5">
+                    <span className="font-mono text-xs text-white font-bold px-2 py-0.5 rounded bg-black/60 border border-white/15">
                       {layer.layer}
                     </span>
                     <div className="flex items-center gap-2">
@@ -121,13 +121,13 @@ export const SystemsLab3D: React.FC = () => {
                     {layer.tech.slice(0, 3).map((t: string) => (
                       <span
                         key={t}
-                        className="font-mono text-[10px] px-2 py-0.5 rounded bg-white/[0.04] text-editorial-muted border border-white/5"
+                        className="font-mono text-xs font-semibold px-2 py-0.5 rounded bg-white/10 text-white border border-white/15"
                       >
                         {t}
                       </span>
                     ))}
                     {layer.tech.length > 3 && (
-                      <span className="font-mono text-[9px] text-editorial-dim">
+                      <span className="font-mono text-xs font-bold text-slate-200">
                         +{layer.tech.length - 3}
                       </span>
                     )}
@@ -136,8 +136,8 @@ export const SystemsLab3D: React.FC = () => {
 
                 {/* Connecting arrow line to next layer */}
                 {idx < SYSTEMS_ARCHITECTURE_LAYERS.length - 1 && (
-                  <div className="flex justify-center my-0.5 opacity-30">
-                    <ArrowDown className="w-3 h-3 text-brand-electric" />
+                  <div className="flex justify-center my-0.5 opacity-50">
+                    <ArrowDown className="w-3.5 h-3.5 text-brand-electric" />
                   </div>
                 )}
               </StaggerItem>
@@ -146,37 +146,37 @@ export const SystemsLab3D: React.FC = () => {
         </StaggerContainer>
 
         {/* Right Column: Layer Inspector & Active Telemetry */}
-        <FadeUp delay={0.1} className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-white/10 bg-[#0d0f18] p-5 font-mono">
+        <FadeUp delay={0.1} className="lg:col-span-5 flex flex-col justify-between rounded-xl border border-white/15 bg-[#0d0f18] p-5 font-mono shadow-xl">
           <div>
-            <div className="flex items-center justify-between pb-3 border-b border-white/10 text-xs">
+            <div className="flex items-center justify-between pb-3 border-b border-white/12 text-xs">
               <span className="text-brand-electric font-bold flex items-center gap-1.5">
                 <Sparkles className="w-3.5 h-3.5 text-brand-blue" />
                 LAYER INSPECTOR // {activeLayer.layer}
               </span>
-              <span className="text-emerald-400 font-mono text-[10px]">STATUS: OPTIMIZED</span>
+              <span className="text-emerald-400 font-mono text-[10px] font-bold">STATUS: OPTIMIZED</span>
             </div>
 
             <div className="mt-4">
-              <span className="text-[10px] text-editorial-dim uppercase tracking-widest">LAYER NAME</span>
+              <span className="text-xs text-slate-200 font-bold uppercase tracking-widest">LAYER NAME</span>
               <h4 className="text-lg font-bold text-white font-display mt-0.5">
                 {activeLayer.name}
               </h4>
             </div>
 
             <div className="mt-4">
-              <span className="text-[10px] text-editorial-dim uppercase tracking-widest">ROLE & SPECIFICATION</span>
-              <p className="text-xs text-editorial-muted font-sans mt-1 leading-relaxed">
+              <span className="text-xs text-slate-200 font-bold uppercase tracking-widest">ROLE & SPECIFICATION</span>
+              <p className="text-xs text-slate-100 font-medium font-sans mt-1 leading-relaxed">
                 {activeLayer.description}
               </p>
             </div>
 
             <div className="mt-4">
-              <span className="text-[10px] text-editorial-dim uppercase tracking-widest">COMPONENTS & STACK</span>
+              <span className="text-xs text-slate-200 font-bold uppercase tracking-widest">COMPONENTS & STACK</span>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {activeLayer.tech.map((tech: string) => (
                   <span
                     key={tech}
-                    className="text-xs px-2.5 py-1 rounded bg-brand-blue/10 text-brand-electric border border-brand-blue/30 font-mono font-medium"
+                    className="text-xs px-2.5 py-1 rounded bg-brand-blue/20 text-sky-200 border border-brand-blue/40 font-mono font-bold"
                   >
                     {tech}
                   </span>
@@ -185,12 +185,12 @@ export const SystemsLab3D: React.FC = () => {
             </div>
 
             <div className="mt-4">
-              <span className="text-[10px] text-editorial-dim uppercase tracking-widest">TOPOLOGY CONNECTIONS</span>
+              <span className="text-xs text-slate-200 font-bold uppercase tracking-widest">TOPOLOGY CONNECTIONS</span>
               <div className="flex flex-wrap gap-1.5 mt-2">
                 {activeLayer.connectedTo.map((conn: string) => (
                   <span
                     key={conn}
-                    className="text-[11px] px-2 py-0.5 rounded bg-white/5 text-editorial-text border border-white/10 font-mono"
+                    className="text-xs px-2 py-0.5 rounded bg-white/10 text-white font-semibold border border-white/15 font-mono"
                   >
                     ⇄ {conn}
                   </span>
@@ -199,9 +199,9 @@ export const SystemsLab3D: React.FC = () => {
             </div>
           </div>
 
-          <div className="mt-6 pt-4 border-t border-white/10 text-[10px] text-editorial-dim flex items-center justify-between">
+          <div className="mt-6 pt-4 border-t border-white/12 text-xs text-slate-200 font-semibold flex items-center justify-between">
             <span>PIPELINE: ASYNC / REACTIVE</span>
-            <span className="text-brand-electric">THROUGHPUT: ZERO BOTTLENECK</span>
+            <span className="text-brand-electric font-bold">THROUGHPUT: ZERO BOTTLENECK</span>
           </div>
         </FadeUp>
       </div>

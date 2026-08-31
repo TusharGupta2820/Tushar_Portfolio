@@ -39,16 +39,16 @@ export const ResearchExplorations: React.FC<ResearchExplorationsProps> = ({ onSe
 
         {/* Currently Exploring Strip */}
         <FadeUp>
-          <div className="p-5 sm:p-6 rounded-2xl bg-white/[0.02] border border-white/8 space-y-3">
-            <p className="text-xs text-editorial-dim flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-violet-400" /> Current explorations
+          <div className="p-5 sm:p-6 rounded-2xl bg-[#0b0e1a] border border-white/15 space-y-3 shadow-lg">
+            <p className="text-xs text-slate-200 font-bold uppercase tracking-wider flex items-center gap-2 font-mono">
+              <span className="w-2 h-2 rounded-full bg-violet-400 animate-pulse" /> Current explorations
             </p>
 
             <div className="flex flex-wrap gap-2">
               {CURRENTLY_EXPLORING.map((item) => (
                 <span
                   key={item}
-                  className="text-xs px-3 py-1.5 rounded-lg bg-violet-500/10 text-violet-300 border border-violet-500/20 font-medium"
+                  className="text-xs px-3 py-1.5 rounded-lg bg-violet-500/20 text-violet-200 border border-violet-400/40 font-semibold shadow-sm"
                 >
                   {item}
                 </span>
@@ -67,33 +67,33 @@ export const ResearchExplorations: React.FC<ResearchExplorationsProps> = ({ onSe
                     soundFx.playBlip(900);
                     onSelectResearch(topic.id);
                   }}
-                  className="p-6 sm:p-7 rounded-2xl bg-white/[0.025] border border-white/8 hover:border-violet-500/30 transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full space-y-6"
+                  className="p-6 sm:p-7 rounded-2xl bg-[#0a0c16] border border-white/15 hover:border-violet-500/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer h-full space-y-6 shadow-xl"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-xs">
-                      <span className="text-violet-400 font-medium">{topic.category}</span>
-                      <span className="text-[10px] text-editorial-dim px-2 py-0.5 rounded border border-white/6 bg-white/5">
+                      <span className="text-violet-300 font-bold font-mono px-2 py-0.5 rounded bg-violet-500/15 border border-violet-500/30">{topic.category}</span>
+                      <span className="text-xs font-semibold text-white px-2 py-0.5 rounded border border-white/20 bg-white/10">
                         {topic.status}
                       </span>
                     </div>
 
-                    <h3 className="text-lg sm:text-xl font-semibold text-white group-hover:text-violet-300 transition-colors">
+                    <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-violet-300 transition-colors">
                       {topic.title}
                     </h3>
 
-                    <div className="p-3.5 rounded-xl bg-white/[0.02] border border-white/5 space-y-1">
-                      <div className="text-[11px] text-editorial-dim flex items-center gap-1.5">
-                        <HelpCircle className="w-3 h-3 text-violet-400" /> Research question
+                    <div className="p-3.5 rounded-xl bg-white/[0.04] border border-white/12 space-y-1">
+                      <div className="text-xs text-slate-200 font-bold flex items-center gap-1.5">
+                        <HelpCircle className="w-3.5 h-3.5 text-violet-400" /> Research question
                       </div>
-                      <p className="text-xs text-editorial-muted italic leading-relaxed">
+                      <p className="text-xs text-slate-100 font-medium italic leading-relaxed">
                         "{topic.question}"
                       </p>
                     </div>
                   </div>
 
-                  <div className="pt-4 border-t border-white/6 flex items-center justify-between text-xs text-editorial-dim group-hover:text-violet-300 transition-colors">
+                  <div className="pt-4 border-t border-white/12 flex items-center justify-between text-xs font-bold text-slate-200 group-hover:text-violet-300 transition-colors">
                     <span>Read research notes</span>
-                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform text-violet-400" />
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform text-violet-400" />
                   </div>
                 </div>
               </FloatCard>

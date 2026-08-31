@@ -102,7 +102,7 @@ export const KEY_NUMBERS = [
   { value: "15+", label: "National Hackathons", context: "National Finalist & Winner" },
   { value: "4", label: "Internships Completed", context: "AI, Full-Stack & Systems" },
   { value: "16", label: "Repositories & Systems", context: "AI, Vision, Cloud & Web" },
-  { value: "2023—27", label: "B.E. Info Tech", context: "TCET Engineering" },
+  { value: "2023-2027", label: "B.E. Info Tech", context: "TCET Engineering" },
 ];
 
 export const SYSTEMS_ARCHITECTURE_LAYERS: SystemArchitectureLayer[] = [

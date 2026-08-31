@@ -12,7 +12,7 @@ export const OpenSourceAndAbout: React.FC = () => {
         {/* About & Open Source */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
           <SlideIn from="left" className="lg:col-span-6 space-y-6">
-            <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono">
+            <p className="text-xs text-slate-200 font-bold uppercase tracking-widest font-mono">
               Philosophy & background
             </p>
 
@@ -21,7 +21,7 @@ export const OpenSourceAndAbout: React.FC = () => {
               <span className="text-brand-electric">Building by choice.</span>
             </h2>
 
-            <div className="space-y-4 text-base text-editorial-muted leading-relaxed font-light">
+            <div className="space-y-4 text-base text-slate-100 font-medium leading-relaxed">
               <p>
                 I'm an Information Technology undergraduate at the University of Mumbai interested in the intersection of artificial intelligence, software engineering, and real-world systems.
               </p>
@@ -34,31 +34,31 @@ export const OpenSourceAndAbout: React.FC = () => {
             </div>
 
             {/* Core Pillars */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/6">
-                <span className="text-brand-electric font-medium block mb-1">First-principles thinking</span>
-                <span className="text-editorial-dim leading-relaxed block">Deconstructing complex architectures into reliable primitives.</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 text-xs font-mono">
+              <div className="p-4 rounded-xl bg-[#0b0e1b] border border-white/15 shadow-md">
+                <span className="text-brand-electric font-bold block mb-1">First-principles thinking</span>
+                <span className="text-slate-200 font-medium leading-relaxed block">Deconstructing complex architectures into reliable primitives.</span>
               </div>
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/6">
-                <span className="text-brand-electric font-medium block mb-1">Continuous shipping</span>
-                <span className="text-editorial-dim leading-relaxed block">Translating theoretical concepts into production-grade systems.</span>
+              <div className="p-4 rounded-xl bg-[#0b0e1b] border border-white/15 shadow-md">
+                <span className="text-brand-electric font-bold block mb-1">Continuous shipping</span>
+                <span className="text-slate-200 font-medium leading-relaxed block">Translating theoretical concepts into production-grade systems.</span>
               </div>
             </div>
           </SlideIn>
 
           {/* GitHub / Open Source Hub */}
           <FadeUp delay={0.1} className="lg:col-span-6">
-            <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/8 space-y-6">
-              <div className="flex items-center justify-between border-b border-white/6 pb-4 text-xs font-mono">
-                <div className="flex items-center gap-2 text-brand-electric">
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#0b0e1b] border border-white/15 space-y-6 shadow-xl">
+              <div className="flex items-center justify-between border-b border-white/12 pb-4 text-xs font-mono">
+                <div className="flex items-center gap-2 text-brand-electric font-bold">
                   <GithubIcon className="w-4 h-4" />
                   <span>Open Source</span>
                 </div>
-                <span className="text-editorial-dim">Active repositories</span>
+                <span className="text-slate-200 font-bold">Active repositories</span>
               </div>
 
               <div className="space-y-2">
-                <div className="text-xs text-editorial-dim">GitHub profile:</div>
+                <div className="text-xs text-slate-200 font-bold font-mono">GitHub profile:</div>
                 <div className="text-xl sm:text-2xl font-bold font-mono text-white flex items-center justify-between">
                   <span>@{PERSONAL_INFO.githubDisplay.replace('github.com/', '')}</span>
                   <a
@@ -66,36 +66,36 @@ export const OpenSourceAndAbout: React.FC = () => {
                     target="_blank"
                     rel="noreferrer"
                     onClick={() => soundFx.playClick(700)}
-                    className="text-xs px-3.5 py-1.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-white font-mono font-medium flex items-center gap-1.5 transition-all"
+                    className="text-xs px-3.5 py-1.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-white font-mono font-bold flex items-center gap-1.5 transition-all shadow-md"
                   >
                     <span>Visit profile</span>
-                    <ExternalLink className="w-3 h-3" />
+                    <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
               </div>
 
               {/* Technical Attributes */}
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 text-xs pt-1 font-mono">
-                <div className="p-3 rounded-lg bg-white/[0.02] border border-white/5">
-                  <span className="text-[10px] text-editorial-dim block">REPOSITORIES</span>
-                  <span className="text-white font-medium text-sm">16+ Systems</span>
+                <div className="p-3 rounded-lg bg-white/10 border border-white/15">
+                  <span className="text-xs text-slate-200 font-bold block">REPOSITORIES</span>
+                  <span className="text-white font-bold text-sm">16+ Systems</span>
                 </div>
-                <div className="p-3 rounded-lg bg-white/[0.02] border border-white/5">
-                  <span className="text-[10px] text-editorial-dim block">LANGUAGES</span>
-                  <span className="text-brand-electric font-medium text-sm">Python, TS, C++</span>
+                <div className="p-3 rounded-lg bg-white/10 border border-white/15">
+                  <span className="text-xs text-slate-200 font-bold block">LANGUAGES</span>
+                  <span className="text-sky-300 font-bold text-sm">Python, TS, C++</span>
                 </div>
-                <div className="p-3 rounded-lg bg-white/[0.02] border border-white/5 col-span-2 sm:col-span-1">
-                  <span className="text-[10px] text-editorial-dim block">DEPLOYMENT</span>
-                  <span className="text-emerald-400 font-medium text-sm">Docker & Cloud</span>
+                <div className="p-3 rounded-lg bg-white/10 border border-white/15 col-span-2 sm:col-span-1">
+                  <span className="text-xs text-slate-200 font-bold block">DEPLOYMENT</span>
+                  <span className="text-emerald-400 font-bold text-sm">Docker & Cloud</span>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-black/30 border border-white/5 font-mono text-xs text-editorial-muted space-y-1.5">
-                <div className="text-brand-electric flex items-center gap-1.5 text-[11px]">
-                  <Terminal className="w-3.5 h-3.5" />
+              <div className="p-3.5 rounded-xl bg-black/50 border border-white/15 font-mono text-xs text-slate-100 space-y-1.5 shadow-inner">
+                <div className="text-brand-electric flex items-center gap-1.5 text-xs font-bold">
+                  <Terminal className="w-4 h-4 text-sky-400" />
                   <span>git clone https://github.com/TusharGupta2820/...</span>
                 </div>
-                <p className="text-[11px] text-editorial-dim font-sans leading-relaxed">
+                <p className="text-xs text-slate-100 font-medium font-sans leading-relaxed">
                   Open-source implementations featuring modular microservices, REST APIs, WebSockets, and deep learning model integrations.
                 </p>
               </div>

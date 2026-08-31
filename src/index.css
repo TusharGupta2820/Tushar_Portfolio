@@ -37,11 +37,21 @@
 
 /* ── Dark mode base ──────────────────────────────── */
 html.dark, :root:has(.dark) {
-  --bg-color: #0a0a0f;
-  --text-color: #f1f5f9;
-  --text-muted-color: #8892a4;
-  --text-dim-color: #556070;
+  --bg-color: #080911;
+  --text-color: #ffffff;
+  --text-muted-color: #f1f5f9;
+  --text-dim-color: #cbd5e1;
   color-scheme: dark;
+}
+
+.dark .text-editorial-muted {
+  color: #f1f5f9 !important;
+  font-weight: 500;
+}
+
+.dark .text-editorial-dim {
+  color: #cbd5e1 !important;
+  font-weight: 500;
 }
 
 /* ── Base resets ─────────────────────────────────── */
@@ -130,10 +140,39 @@ html.light .tech-dots {
    LIGHT THEME — professional, high-contrast
    ══════════════════════════════════════════════════ */
 
+/* ══════════════════════════════════════════════════
+   LIGHT THEME — professional, high-contrast
+   ══════════════════════════════════════════════════ */
+
 html:not(.dark) body,
 html.light body {
   background-color: #fafafa !important;
-  color: #0a0a0f !important;
+  color: #0f172a !important;
+}
+
+/* All light/slate text classes → dark slate in Light Mode */
+html:not(.dark) [class*="text-slate-100"],
+html:not(.dark) [class*="text-slate-200"],
+html:not(.dark) [class*="text-slate-300"],
+html:not(.dark) [class*="text-slate-400"],
+html:not(.dark) [class*="text-slate-50"],
+html:not(.dark) [class*="text-sky-100"],
+html:not(.dark) [class*="text-sky-200"],
+html:not(.dark) [class*="text-sky-300"],
+html:not(.dark) [class*="text-sky-400"],
+html:not(.dark) [class*="text-white"],
+html.light [class*="text-slate-100"],
+html.light [class*="text-slate-200"],
+html.light [class*="text-slate-300"],
+html.light [class*="text-slate-400"],
+html.light [class*="text-slate-50"],
+html.light [class*="text-sky-100"],
+html.light [class*="text-sky-200"],
+html.light [class*="text-sky-300"],
+html.light [class*="text-sky-400"],
+html.light [class*="text-white"] {
+  color: #0f172a !important;
+  font-weight: 600 !important;
 }
 
 /* Headings */
@@ -145,15 +184,15 @@ html.light h1,
 html.light h2,
 html.light h3,
 html.light h4 {
-  color: #09090b !important;
+  color: #020617 !important;
   font-weight: 700 !important;
 }
 
 /* Body text */
 html:not(.dark) p,
 html.light p {
-  color: #374151 !important;
-  font-weight: 400 !important;
+  color: #1e293b !important;
+  font-weight: 500 !important;
 }
 
 /* Mono text */
@@ -163,83 +202,96 @@ html:not(.dark) .font-mono,
 html.light code,
 html.light pre,
 html.light .font-mono {
-  color: #111827 !important;
-  font-weight: 500 !important;
-}
-
-/* White text → near-black in light */
-html:not(.dark) [class*="text-white"],
-html.light [class*="text-white"] {
-  color: #09090b !important;
+  color: #0f172a !important;
   font-weight: 600 !important;
 }
 
 html:not(.dark) .text-editorial-text,
 html.light .text-editorial-text {
-  color: #111827 !important;
-  font-weight: 500 !important;
+  color: #0f172a !important;
+  font-weight: 600 !important;
 }
 
 html:not(.dark) .text-editorial-muted,
 html.light .text-editorial-muted {
-  color: #374151 !important;
-  font-weight: 400 !important;
+  color: #334155 !important;
+  font-weight: 500 !important;
 }
 
 html:not(.dark) .text-editorial-dim,
 html.light .text-editorial-dim {
-  color: #6b7280 !important;
-  font-weight: 400 !important;
+  color: #475569 !important;
+  font-weight: 500 !important;
 }
 
-/* Brand accent stays blue */
+/* Brand accent stays bright blue in light mode */
 html:not(.dark) .text-brand-electric,
 html.light .text-brand-electric {
   color: #1d4ed8 !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
 
-html:not(.dark) [class*="bg-brand-blue/10"],
-html.light [class*="bg-brand-blue/10"] {
-  background-color: #eff6ff !important;
-  border-color: #bfdbfe !important;
-  color: #1d4ed8 !important;
+/* Badges & Pills in Light Mode */
+html:not(.dark) [class*="bg-emerald-"],
+html.light [class*="bg-emerald-"] {
+  background-color: #d1fae5 !important;
+  border-color: #6ee7b7 !important;
+  color: #065f46 !important;
+}
+
+html:not(.dark) [class*="text-emerald-"],
+html.light [class*="text-emerald-"] {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+html:not(.dark) [class*="bg-amber-"],
+html.light [class*="bg-amber-"] {
+  background-color: #fef3c7 !important;
+  border-color: #fcd34d !important;
+  color: #92400e !important;
+}
+
+html:not(.dark) [class*="text-amber-"],
+html.light [class*="text-amber-"] {
+  color: #b45309 !important;
+  font-weight: 700 !important;
 }
 
 /* Header */
 html:not(.dark) header,
 html.light header {
-  background-color: rgba(250, 250, 250, 0.9) !important;
-  border-bottom: 1px solid #e5e7eb !important;
-  box-shadow: none;
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-bottom: 1px solid #cbd5e1 !important;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
 /* Section borders */
 html:not(.dark) section,
 html.light section {
-  border-color: #e5e7eb !important;
+  border-color: #cbd5e1 !important;
 }
 
-/* Dark card backgrounds → white in light */
+/* Dark card backgrounds → white card with distinct border & shadow in light mode */
 html:not(.dark) [class*="bg-[#0"],
 html:not(.dark) [class*="bg-[#1"],
 html.light [class*="bg-[#0"],
 html.light [class*="bg-[#1"] {
   background-color: #ffffff !important;
-  border-color: #e5e7eb !important;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  border-color: #cbd5e1 !important;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.03) !important;
 }
 
 html:not(.dark) [class*="border-white/"],
 html.light [class*="border-white/"] {
-  border-color: #e5e7eb !important;
+  border-color: #cbd5e1 !important;
 }
 
 html:not(.dark) [class*="bg-white/"],
 html.light [class*="bg-white/"] {
-  background-color: #f9fafb !important;
-  border-color: #e5e7eb !important;
-  color: #111827 !important;
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
 }
 
 /* Modal overlays */

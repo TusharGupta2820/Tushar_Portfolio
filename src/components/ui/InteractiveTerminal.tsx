@@ -316,7 +316,7 @@ export const InteractiveTerminal: React.FC<InteractiveTerminalProps> = ({
           className="px-4 py-2.5 rounded-full bg-[#0d0f18] hover:bg-[#151928] text-white border border-brand-blue/30 shadow-2xl shadow-brand-blue/20 transition-all hover:scale-105 active:scale-95 flex items-center gap-2 font-mono text-xs group"
           title="Open TusharOS Interactive Terminal"
         >
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+          <span className="w-2 h-2 rounded-full bg-emerald-400" />
           <Terminal className="w-4 h-4 text-brand-electric group-hover:rotate-12 transition-transform" />
           <span className="font-bold tracking-wider hidden sm:inline text-brand-electric">
             {isOpen ? 'CLOSE TERMINAL' : '>_ TusharOS REPL'}

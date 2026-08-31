@@ -13,6 +13,7 @@ import { SectionTransition } from './components/ui/Animations';
 import { Hero } from './components/sections/Hero';
 import { SelectedWork } from './components/sections/SelectedWork';
 import { SystemsLab3D } from './components/3d/SystemsLab3D';
+import { Background3D } from './components/3d/Background3D';
 import { ResearchExplorations } from './components/sections/ResearchExplorations';
 import { Experience } from './components/sections/Experience';
 import { TechnicalSkills } from './components/sections/TechnicalSkills';
@@ -33,8 +34,10 @@ export function App() {
 
   // Theme Management
   const [theme, setTheme] = useState<'dark' | 'light'>(() => {
-    const saved = localStorage.getItem('tushar-portfolio-theme');
-    return saved === 'light' ? 'light' : 'dark';
+    if (typeof window !== 'undefined') {
+      return (localStorage.getItem('tushar-portfolio-theme') as 'dark' | 'light') || 'dark';
+    }
+    return 'dark';
   });
 
   useEffect(() => {
@@ -71,6 +74,9 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-background text-editorial-text selection:bg-brand-blue selection:text-white relative w-full overflow-x-hidden transition-colors duration-300">
+      {/* Interactive 3D Ambient Background Canvas */}
+      <Background3D />
+
       {/* Short loading sequence */}
       {isLoading && <LoadingSequence onComplete={() => setIsLoading(false)} />}
 
@@ -87,7 +93,7 @@ export function App() {
         onToggleTheme={toggleTheme}
       />
 
-      {/* Section-Wise Content Opening with 3D Transitions */}
+      {/* Section-Wise Content View with 3D Page Transitions */}
       <main className="relative z-10 w-full pt-16 min-h-[85vh]">
         <AnimatePresence mode="wait">
           {/* OVERVIEW / HERO */}
@@ -113,13 +119,13 @@ export function App() {
               <section id="systems" className="py-24 sm:py-32 w-full">
                 <div className="w-full max-w-[1720px] mx-auto px-6 sm:px-10 lg:px-14 xl:px-18 2xl:px-24 space-y-8">
                   <div className="max-w-2xl space-y-3">
-                    <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono flex items-center gap-2">
+                    <p className="text-xs text-slate-200 font-bold uppercase tracking-widest font-mono flex items-center gap-2">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-electric" /> Architecture & topologies
                     </p>
                     <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
                       Systems I build
                     </h2>
-                    <p className="text-base text-editorial-muted leading-relaxed font-light">
+                    <p className="text-base text-slate-100 font-medium leading-relaxed font-light">
                       From frontend component orchestration to high-throughput async gateways, distributed telemetry, and local model inference.
                     </p>
                   </div>

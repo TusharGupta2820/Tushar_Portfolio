@@ -11,16 +11,23 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
 }) => {
   const [imageError, setImageError] = useState<boolean>(false);
   const [mousePos, setMousePos] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [glarePos, setGlarePos] = useState<{ x: number; y: number }>({ x: 50, y: 50 });
+  const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 12;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -12;
+    const xPct = (e.clientX - rect.left) / rect.width;
+    const yPct = (e.clientY - rect.top) / rect.height;
+    const x = (xPct - 0.5) * 14;
+    const y = (yPct - 0.5) * -14;
     setMousePos({ x, y });
+    setGlarePos({ x: xPct * 100, y: yPct * 100 });
+    setIsHovered(true);
   };
 
   const handleMouseLeave = () => {
     setMousePos({ x: 0, y: 0 });
+    setIsHovered(false);
   };
 
   return (
@@ -34,10 +41,19 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
         onMouseLeave={handleMouseLeave}
         style={{
           transform: `rotateY(${mousePos.x}deg) rotateX(${mousePos.y}deg)`,
+          transformStyle: 'preserve-3d',
           transition: 'transform 0.15s ease-out',
         }}
         className="relative rounded-3xl border border-brand-blue/30 bg-[#0a0c16]/90 backdrop-blur-xl p-4 sm:p-5 shadow-2xl overflow-hidden font-mono"
       >
+        {/* Specular Glare Overlay */}
+        <div
+          className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-30 rounded-[inherit]"
+          style={{
+            opacity: isHovered ? 0.35 : 0,
+            background: `radial-gradient(500px circle at ${glarePos.x}% ${glarePos.y}%, rgba(59, 130, 246, 0.3), transparent 45%)`,
+          }}
+        />
         {/* HUD Top Bar */}
         <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10 text-[11px]">
           <div className="flex items-center gap-1.5 text-brand-electric font-bold">
@@ -67,7 +83,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
             <div className="relative z-10 flex flex-col items-center justify-center p-6 text-center space-y-4">
               <div className="relative p-6 rounded-full bg-brand-blue/10 border border-brand-blue/30 text-brand-electric">
                 <User className="w-16 h-16 text-brand-electric stroke-[1.5]" />
-                <span className="absolute bottom-0 right-0 p-1.5 rounded-full bg-emerald-400 border-2 border-[#06070d] animate-pulse" />
+                <span className="absolute bottom-0 right-0 p-1.5 rounded-full bg-emerald-400 border-2 border-[#06070d]" />
               </div>
 
               <div className="space-y-1">
@@ -95,7 +111,7 @@ export const HeroPortrait: React.FC<HeroPortraitProps> = ({
           {/* Bottom Overlay Pill on Photo */}
           <div className="absolute bottom-3 left-3 right-3 p-2.5 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 flex items-center justify-between text-[10px] z-10">
             <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
               <span>STATUS: AVAILABLE</span>
             </div>
             <span className="text-editorial-dim">MUMBAI, IN</span>

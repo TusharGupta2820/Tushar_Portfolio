@@ -1,5 +1,5 @@
-import React from 'react';
-import { X, Printer, ExternalLink, Mail, Phone, MapPin, CheckCircle } from 'lucide-react';
+import React, { useState } from 'react';
+import { X, Printer, ExternalLink, Mail, Phone, MapPin, CheckCircle, Download } from 'lucide-react';
 import { PERSONAL_INFO, EXPERIENCES, EDUCATION, HACKATHONS, CERTIFICATIONS, TECHNICAL_SKILLS } from '../../data/portfolioData';
 import { soundFx } from '../../utils/audio';
 
@@ -9,6 +9,8 @@ interface ResumeModalProps {
 }
 
 export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => {
+  const [viewMode, setViewMode] = useState<'pdf' | 'interactive'>('pdf');
+
   if (!isOpen) return null;
 
   const handlePrint = () => {
@@ -20,19 +22,48 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
     <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-200">
       <div className="relative w-full max-w-4xl bg-[#0d0f18] border border-white/20 rounded-2xl shadow-2xl overflow-hidden my-auto max-h-[92vh] flex flex-col">
         {/* Modal Action Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b border-white/10 bg-[#08090f] shrink-0 font-mono">
-          <div className="flex items-center gap-2 text-xs text-brand-electric font-semibold">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4 border-b border-white/10 bg-[#08090f] shrink-0 font-mono">
+          <div className="flex items-center gap-2 text-xs text-brand-electric font-bold">
             <span className="w-2 h-2 rounded-full bg-emerald-400" />
-            <span>OFFICIAL CURRICULUM VITAE // TUSHAR GUPTA</span>
+            <span>TUSHAR GUPTA // OFFICIAL RESUME</span>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* View Mode Toggle */}
+            <div className="flex items-center p-0.5 rounded-lg bg-white/5 border border-white/10 text-xs">
+              <button
+                onClick={() => setViewMode('pdf')}
+                className={`px-2.5 py-1 rounded-md transition-all font-bold ${viewMode === 'pdf' ? 'bg-brand-blue text-white shadow' : 'text-slate-300 hover:text-white'}`}
+              >
+                PDF View
+              </button>
+              <button
+                onClick={() => setViewMode('interactive')}
+                className={`px-2.5 py-1 rounded-md transition-all font-bold ${viewMode === 'interactive' ? 'bg-brand-blue text-white shadow' : 'text-slate-300 hover:text-white'}`}
+              >
+                Web View
+              </button>
+            </div>
+
+            {/* Direct Download PDF Button */}
+            <a
+              href="/Tushar_Gupta_Resume_BE.pdf"
+              download="Tushar_Gupta_Resume_BE.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => soundFx.playClick(800)}
+              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-xs font-mono text-white font-bold transition-all shadow-md shadow-brand-blue/30"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>DOWNLOAD PDF</span>
+            </a>
+
             <button
               onClick={handlePrint}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs font-mono text-white font-bold transition-colors"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>PRINT / PDF</span>
+              <span>PRINT</span>
             </button>
 
             <button
@@ -47,9 +78,18 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
           </div>
         </div>
 
-        {/* Resume Content Body */}
-        <div className="overflow-y-auto p-6 sm:p-10 space-y-8 bg-[#0b0d14] text-editorial-text font-sans">
-          {/* Header Identity */}
+        {/* Modal Content Body */}
+        {viewMode === 'pdf' ? (
+          <div className="flex-1 bg-[#0b0d14] p-4 flex flex-col items-center justify-center min-h-[600px]">
+            <iframe
+              src="/Tushar_Gupta_Resume_BE.pdf"
+              title="Tushar Gupta Resume"
+              className="w-full h-[70vh] min-h-[550px] rounded-xl border border-white/15 bg-white shadow-2xl"
+            />
+          </div>
+        ) : (
+          <div className="overflow-y-auto p-6 sm:p-10 space-y-8 bg-[#0b0d14] text-editorial-text font-sans">
+            {/* Header Identity */}
           <div className="border-b border-white/10 pb-6">
             <h1 className="text-3xl font-display font-extrabold text-white tracking-tight">
               {PERSONAL_INFO.name}
@@ -209,6 +249,7 @@ export const ResumeModal: React.FC<ResumeModalProps> = ({ isOpen, onClose }) => 
             </div>
           </div>
         </div>
+        )}
 
         {/* Modal Bottom Footer */}
         <div className="px-6 py-3 border-t border-white/10 bg-[#08090f] flex items-center justify-between text-xs font-mono text-editorial-dim">

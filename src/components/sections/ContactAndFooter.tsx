@@ -51,7 +51,7 @@ export const ContactAndFooter: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Direct Contact Details */}
           <SlideIn from="left" className="lg:col-span-6 space-y-6">
-            <p className="text-xs text-editorial-dim uppercase tracking-widest font-mono">
+            <p className="text-xs text-slate-200 font-bold uppercase tracking-widest font-mono">
               Get in touch
             </p>
 
@@ -60,24 +60,24 @@ export const ContactAndFooter: React.FC = () => {
               <span className="text-brand-electric">worth solving?</span>
             </h2>
 
-            <p className="text-base text-editorial-muted leading-relaxed font-light">
+            <p className="text-base text-slate-100 font-medium leading-relaxed">
               Always open to discussing new opportunities, engineering challenges, AI systems, and open-source collaborations.
             </p>
 
             {/* Direct Contact Cards */}
-            <div className="space-y-2.5 pt-2 text-sm">
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/6 flex items-center justify-between group">
+            <div className="space-y-2.5 pt-2 text-sm font-mono">
+              <div className="p-4 rounded-xl bg-[#0b0e1b] border border-white/15 flex items-center justify-between group shadow-lg">
                 <a
                   href={`mailto:${PERSONAL_INFO.email}`}
                   onClick={() => soundFx.playClick(700)}
                   className="flex items-center gap-3 flex-1"
                 >
-                  <div className="p-2 rounded-lg bg-brand-blue/10 text-brand-electric">
-                    <Mail className="w-4 h-4" />
+                  <div className="p-2 rounded-lg bg-brand-blue/20 text-brand-electric border border-brand-blue/30">
+                    <Mail className="w-4 h-4 text-sky-300" />
                   </div>
                   <div>
-                    <span className="text-xs text-editorial-dim block">Email</span>
-                    <span className="text-white font-medium group-hover:text-brand-electric transition-colors">
+                    <span className="text-xs text-slate-200 font-bold block">Email</span>
+                    <span className="text-white font-bold group-hover:text-brand-electric transition-colors">
                       {PERSONAL_INFO.email}
                     </span>
                   </div>
@@ -86,7 +86,7 @@ export const ContactAndFooter: React.FC = () => {
                 <div className="flex items-center gap-1">
                   <button
                     onClick={handleCopyEmail}
-                    className="px-2.5 py-1.5 rounded-md bg-white/5 hover:bg-white/10 text-editorial-muted hover:text-white transition-colors flex items-center gap-1 text-xs"
+                    className="px-2.5 py-1.5 rounded-md bg-white/10 hover:bg-white/20 text-white font-bold border border-white/15 transition-colors flex items-center gap-1 text-xs"
                     title="Copy email address"
                   >
                     {copiedEmail ? (
@@ -99,7 +99,7 @@ export const ContactAndFooter: React.FC = () => {
 
                   <a
                     href={`mailto:${PERSONAL_INFO.email}`}
-                    className="p-1.5 text-editorial-dim hover:text-white transition-colors"
+                    className="p-1.5 text-white hover:text-brand-electric transition-colors"
                   >
                     <ArrowUpRight className="w-4 h-4" />
                   </a>
@@ -109,43 +109,43 @@ export const ContactAndFooter: React.FC = () => {
               <a
                 href={`tel:${PERSONAL_INFO.phone.replace(/\s+/g, '')}`}
                 onClick={() => soundFx.playClick(700)}
-                className="p-4 rounded-xl bg-white/[0.02] border border-white/6 hover:border-brand-blue/30 flex items-center justify-between group transition-colors"
+                className="p-4 rounded-xl bg-[#0b0e1b] border border-white/15 hover:border-brand-blue/40 flex items-center justify-between group transition-colors shadow-lg"
               >
                 <div className="flex items-center gap-3">
-                  <div className="p-2 rounded-lg bg-brand-blue/10 text-brand-electric">
-                    <Phone className="w-4 h-4" />
+                  <div className="p-2 rounded-lg bg-brand-blue/20 text-brand-electric border border-brand-blue/30">
+                    <Phone className="w-4 h-4 text-sky-300" />
                   </div>
                   <div>
-                    <span className="text-xs text-editorial-dim block">Phone / WhatsApp</span>
-                    <span className="text-white font-medium group-hover:text-brand-electric transition-colors">
+                    <span className="text-xs text-slate-200 font-bold block">Phone / WhatsApp</span>
+                    <span className="text-white font-bold group-hover:text-brand-electric transition-colors">
                       {PERSONAL_INFO.phone}
                     </span>
                   </div>
                 </div>
-                <ArrowUpRight className="w-4 h-4 text-editorial-dim group-hover:text-white transition-colors" />
+                <ArrowUpRight className="w-4 h-4 text-slate-200 group-hover:text-white transition-colors" />
               </a>
 
-              <div className="p-4 rounded-xl bg-white/[0.02] border border-white/6 flex items-center gap-3">
-                <div className="p-2 rounded-lg bg-white/5 text-editorial-dim">
-                  <MapPin className="w-4 h-4 text-brand-blue" />
+              <div className="p-4 rounded-xl bg-[#0b0e1b] border border-white/15 flex items-center gap-3 shadow-lg">
+                <div className="p-2 rounded-lg bg-white/10 text-white border border-white/15">
+                  <MapPin className="w-4 h-4 text-brand-electric" />
                 </div>
                 <div>
-                  <span className="text-xs text-editorial-dim block">Location</span>
-                  <span className="text-white font-medium">{PERSONAL_INFO.location}</span>
+                  <span className="text-xs text-slate-200 font-bold block">Location</span>
+                  <span className="text-white font-bold">{PERSONAL_INFO.location}</span>
                 </div>
               </div>
             </div>
 
             {/* Social Links */}
-            <div className="flex items-center gap-2.5 pt-1 text-xs font-medium">
+            <div className="flex items-center gap-2.5 pt-1 text-xs font-bold font-mono">
               <a
                 href={PERSONAL_INFO.github}
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => soundFx.playClick(700)}
-                className="px-3.5 py-2 rounded-lg bg-white/[0.02] hover:bg-white/[0.06] border border-white/8 text-white flex items-center gap-2 transition-colors"
+                className="px-4 py-2 rounded-lg bg-[#0b0e1b] hover:bg-white/10 border border-white/15 text-white flex items-center gap-2 transition-colors shadow-md"
               >
-                <GithubIcon className="w-3.5 h-3.5" />
+                <GithubIcon className="w-4 h-4" />
                 <span>GitHub ↗</span>
               </a>
 
@@ -154,9 +154,9 @@ export const ContactAndFooter: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
                 onClick={() => soundFx.playClick(700)}
-                className="px-3.5 py-2 rounded-lg bg-white/[0.02] hover:bg-white/[0.06] border border-white/8 text-white flex items-center gap-2 transition-colors"
+                className="px-4 py-2 rounded-lg bg-[#0b0e1b] hover:bg-white/10 border border-white/15 text-white flex items-center gap-2 transition-colors shadow-md"
               >
-                <LinkedinIcon className="w-3.5 h-3.5 text-brand-electric" />
+                <LinkedinIcon className="w-4 h-4 text-brand-electric" />
                 <span>LinkedIn ↗</span>
               </a>
             </div>
@@ -164,24 +164,24 @@ export const ContactAndFooter: React.FC = () => {
 
           {/* Right Column: Clean Minimal Contact Form */}
           <FadeUp delay={0.1} className="lg:col-span-6">
-            <div className="p-6 sm:p-8 rounded-2xl bg-white/[0.02] border border-white/8 space-y-6">
-              <div className="border-b border-white/6 pb-3 text-xs flex items-center justify-between text-editorial-dim">
-                <span className="text-white font-medium">Send a direct message</span>
-                <span>Replies within 24h</span>
+            <div className="p-6 sm:p-8 rounded-2xl bg-[#0b0e1b] border border-white/15 space-y-6 shadow-xl">
+              <div className="border-b border-white/12 pb-3 text-xs flex items-center justify-between text-slate-200 font-bold font-mono uppercase tracking-wider">
+                <span className="text-white font-bold">Send a direct message</span>
+                <span className="text-emerald-400">Replies within 24h</span>
               </div>
 
               {isSubmitted ? (
-                <div className="p-8 rounded-xl bg-emerald-950/20 border border-emerald-500/20 text-center space-y-2">
-                  <CheckCircle2 className="w-7 h-7 text-emerald-400 mx-auto" />
-                  <h3 className="text-base font-semibold text-white">Message dispatched</h3>
-                  <p className="text-xs text-editorial-muted leading-relaxed">
+                <div className="p-8 rounded-xl bg-emerald-500/20 border border-emerald-400/40 text-center space-y-2">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
+                  <h3 className="text-base font-bold text-white">Message dispatched</h3>
+                  <p className="text-xs text-slate-100 font-medium leading-relaxed">
                     Thank you. Your email client has been opened for direct delivery to {PERSONAL_INFO.email}.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4 text-xs">
                   <div>
-                    <label className="text-editorial-dim block mb-1.5 font-medium">
+                    <label className="text-slate-200 block mb-1.5 font-bold uppercase tracking-wider font-mono">
                       Your name
                     </label>
                     <input
@@ -190,12 +190,12 @@ export const ContactAndFooter: React.FC = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="e.g. Alex Mercer"
-                      className="w-full bg-white/[0.02] border border-white/8 rounded-lg px-3.5 py-2.5 text-white placeholder:text-editorial-dim focus:outline-none focus:border-brand-electric transition-colors text-sm"
+                      className="w-full bg-[#080a14] border border-white/20 rounded-lg px-3.5 py-2.5 text-white font-medium placeholder:text-slate-300 focus:outline-none focus:border-brand-electric transition-colors text-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="text-editorial-dim block mb-1.5 font-medium">
+                    <label className="text-slate-200 block mb-1.5 font-bold uppercase tracking-wider font-mono">
                       Your email
                     </label>
                     <input
@@ -204,12 +204,12 @@ export const ContactAndFooter: React.FC = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       placeholder="e.g. alex@company.com"
-                      className="w-full bg-white/[0.02] border border-white/8 rounded-lg px-3.5 py-2.5 text-white placeholder:text-editorial-dim focus:outline-none focus:border-brand-electric transition-colors text-sm"
+                      className="w-full bg-[#080a14] border border-white/20 rounded-lg px-3.5 py-2.5 text-white font-medium placeholder:text-slate-300 focus:outline-none focus:border-brand-electric transition-colors text-sm"
                     />
                   </div>
 
                   <div>
-                    <label className="text-editorial-dim block mb-1.5 font-medium">
+                    <label className="text-slate-200 block mb-1.5 font-bold uppercase tracking-wider font-mono">
                       Project or message
                     </label>
                     <textarea
@@ -218,16 +218,16 @@ export const ContactAndFooter: React.FC = () => {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       placeholder="Describe what you'd like to discuss or collaborate on..."
-                      className="w-full bg-white/[0.02] border border-white/8 rounded-lg px-3.5 py-2.5 text-white placeholder:text-editorial-dim focus:outline-none focus:border-brand-electric transition-colors resize-none text-sm"
+                      className="w-full bg-[#080a14] border border-white/20 rounded-lg px-3.5 py-2.5 text-white font-medium placeholder:text-slate-300 focus:outline-none focus:border-brand-electric transition-colors resize-none text-sm"
                     />
                   </div>
 
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full py-2.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-white font-medium transition-all flex items-center justify-center gap-2 shadow-md shadow-brand-blue/20 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 text-sm"
+                    className="w-full py-2.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-white font-bold transition-all flex items-center justify-center gap-2 shadow-lg shadow-brand-blue/30 hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50 text-sm"
                   >
-                    <Send className="w-3.5 h-3.5" />
+                    <Send className="w-4 h-4" />
                     <span>{isSubmitting ? 'Sending...' : 'Send message'}</span>
                   </button>
                 </form>
@@ -237,17 +237,17 @@ export const ContactAndFooter: React.FC = () => {
         </div>
 
         {/* Global Footer */}
-        <div className="border-t border-white/8 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-editorial-dim">
+        <div className="border-t border-white/12 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-semibold text-slate-200">
           <div className="space-y-0.5 text-center md:text-left">
-            <div className="font-semibold text-white text-sm">
+            <div className="font-bold text-white text-sm">
               {PERSONAL_INFO.name}
             </div>
-            <div className="text-editorial-dim">
+            <div className="text-slate-200 font-medium">
               Software Engineer & AI Researcher · {PERSONAL_INFO.location}
             </div>
           </div>
 
-          <div className="flex items-center gap-3 text-editorial-dim">
+          <div className="flex items-center gap-3 text-slate-200 font-bold">
             <a href={PERSONAL_INFO.github} target="_blank" rel="noreferrer" className="hover:text-white transition-colors">
               GitHub
             </a>
@@ -260,7 +260,7 @@ export const ContactAndFooter: React.FC = () => {
               Email
             </a>
             <span>·</span>
-            <span>© 2026</span>
+            <span className="text-white">© 2026</span>
           </div>
         </div>
       </div>

@@ -78,29 +78,29 @@ export const Navigation: React.FC<NavigationProps> = ({
             </button>
 
             {/* Availability pill */}
-            <div className="hidden xl:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-white/10 font-mono text-[10px] text-editorial-dim">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400/80" />
+            <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full border border-white/20 bg-white/5 font-mono text-xs text-white font-semibold shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-400" />
               <span>Open to work</span>
             </div>
           </div>
 
           {/* Desktop nav */}
-          <nav className="hidden lg:flex items-center gap-1 text-sm">
+          <nav className="hidden lg:flex items-center gap-1 text-sm font-semibold">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => handleLinkClick(link.id)}
-                  className={`relative px-3 py-2 rounded-md font-medium transition-colors ${
+                  className={`relative px-3.5 py-2 rounded-md font-bold transition-all ${
                     isActive
-                      ? 'text-white'
-                      : 'text-editorial-dim hover:text-white'
+                      ? 'text-white bg-brand-blue/20 border border-brand-blue/40 shadow-sm'
+                      : 'text-slate-200 hover:text-white hover:bg-white/10'
                   }`}
                 >
                   <span>{link.label}</span>
                   {isActive && (
-                    <span className="absolute bottom-0.5 left-3 right-3 h-[1.5px] rounded-full bg-brand-electric/70" />
+                    <span className="absolute bottom-0 left-3 right-3 h-[2px] rounded-full bg-brand-electric" />
                   )}
                 </button>
               );
@@ -108,50 +108,50 @@ export const Navigation: React.FC<NavigationProps> = ({
           </nav>
 
           {/* Right utilities */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center gap-2">
             {/* Theme toggle */}
             {onToggleTheme && (
               <button
                 onClick={() => { soundFx.playBlip(900); onToggleTheme(); }}
-                className="p-2 rounded-md text-editorial-dim hover:text-white hover:bg-white/5 transition-colors"
+                className="p-2 rounded-md text-white hover:bg-white/10 border border-white/10 transition-colors"
                 title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
                 aria-label="Toggle theme"
               >
                 {theme === 'dark'
-                  ? <Sun className="w-4 h-4" />
-                  : <Moon className="w-4 h-4" />}
+                  ? <Sun className="w-4 h-4 text-amber-300" />
+                  : <Moon className="w-4 h-4 text-slate-200" />}
               </button>
             )}
 
             {/* Resume button */}
             <button
               onClick={() => { soundFx.playBlip(750); onOpenResumeModal(); }}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-md border border-white/12 text-sm text-editorial-dim hover:text-white hover:border-white/25 transition-all font-medium"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-md border border-white/20 bg-brand-blue/15 text-sm text-white hover:bg-brand-blue/30 hover:border-brand-blue/50 transition-all font-bold shadow-sm"
               title="View résumé"
             >
-              <FileText className="w-3.5 h-3.5" />
+              <FileText className="w-3.5 h-3.5 text-brand-electric" />
               <span>Résumé</span>
             </button>
 
             {/* Command palette */}
             <button
               onClick={() => { soundFx.playBlip(800); onOpenCommandMenu(); }}
-              className="hidden md:flex items-center gap-1 px-2 py-1.5 rounded-md border border-white/8 text-editorial-dim hover:text-white hover:bg-white/5 text-xs transition-colors"
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 rounded-md border border-white/15 bg-white/5 text-white font-semibold text-xs hover:bg-white/10 transition-colors"
               title="Command palette (⌘K)"
             >
-              <Command className="w-3.5 h-3.5" />
-              <span className="text-[10px] text-editorial-dim/70">⌘K</span>
+              <Command className="w-3.5 h-3.5 text-brand-electric" />
+              <span className="text-xs font-bold text-slate-200">⌘K</span>
             </button>
 
             {/* Audio toggle */}
             <button
               onClick={toggleAudio}
-              className="p-2 rounded-md text-editorial-dim hover:text-white hover:bg-white/5 transition-colors"
+              className="p-2 rounded-md text-white hover:bg-white/10 border border-white/10 transition-colors"
               title={isMuted ? 'Unmute' : 'Mute'}
             >
               {isMuted
-                ? <VolumeX className="w-4 h-4" />
-                : <Volume2 className="w-4 h-4" />}
+                ? <VolumeX className="w-4 h-4 text-rose-400" />
+                : <Volume2 className="w-4 h-4 text-emerald-400" />}
             </button>
 
             {/* Hamburger */}

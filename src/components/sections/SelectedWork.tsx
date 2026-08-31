@@ -91,13 +91,13 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
             return (
               <StaggerItem key={project.id} className="relative scroll-mt-24">
                 <FloatCard intensity={3}>
-                  <div className="rounded-2xl border border-white/8 bg-white/[0.02] hover:border-white/14 transition-all duration-300 p-6 sm:p-8 lg:p-10 space-y-7">
+                  <div className="rounded-2xl border border-white/15 bg-[#0b0e1b]/95 hover:border-white/25 transition-all duration-300 p-6 sm:p-8 lg:p-10 space-y-7 shadow-xl">
                   {/* Header */}
-                  <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/8 text-sm">
+                  <div className="flex flex-wrap items-center justify-between gap-3 pb-5 border-b border-white/12 text-sm">
                     <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs text-editorial-dim font-mono">{project.category}</span>
+                      <span className="text-xs text-white font-bold font-mono px-2.5 py-1 rounded bg-white/10 border border-white/20">{project.category}</span>
                       {project.label && (
-                        <span className="px-2 py-0.5 rounded text-xs bg-amber-500/10 text-amber-300/90 border border-amber-500/15">
+                        <span className="px-2.5 py-1 rounded text-xs bg-amber-500/20 text-amber-200 border border-amber-500/40 font-bold">
                           {project.label}
                         </span>
                       )}
@@ -109,7 +109,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                           href={project.liveUrl}
                           target="_blank" rel="noreferrer"
                           onClick={() => soundFx.playClick(700)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-500/20 text-emerald-300/80 text-xs hover:bg-emerald-500/8 transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-emerald-400/30 text-emerald-300 font-semibold text-xs bg-emerald-500/10 hover:bg-emerald-500/20 transition-colors"
                         >
                           <ExternalLink className="w-3.5 h-3.5" />
                           Live demo
@@ -120,7 +120,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                           href={project.githubUrl}
                           target="_blank" rel="noreferrer"
                           onClick={() => soundFx.playClick(700)}
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/8 text-editorial-dim hover:text-white text-xs transition-colors"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-white/20 text-white font-medium text-xs bg-white/5 hover:bg-white/15 transition-colors"
                         >
                           <GithubIcon className="w-3.5 h-3.5" />
                           GitHub
@@ -128,7 +128,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                       )}
                       <button
                         onClick={() => { soundFx.playBlip(850); onSelectProject(project.id); }}
-                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-blue/90 text-white text-xs font-medium hover:bg-brand-cobalt transition-all"
+                        className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-blue hover:bg-brand-cobalt text-white text-xs font-bold transition-all shadow-md shadow-brand-blue/30"
                       >
                         Case study
                         <ArrowRight className="w-3.5 h-3.5" />
@@ -144,31 +144,31 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                       </h3>
 
                       {project.subtitle && (
-                        <div className="text-xs sm:text-sm text-brand-electric font-mono">
+                        <div className="text-xs sm:text-sm text-sky-400 font-bold font-mono tracking-wide">
                           {project.subtitle}
                         </div>
                       )}
 
-                      <p className="text-sm sm:text-base text-editorial-muted font-sans leading-relaxed">
+                      <p className="text-sm sm:text-base text-slate-100 font-medium font-sans leading-relaxed">
                         {project.description}
                       </p>
 
                       {/* Verified Impact highlight if present */}
                       {project.impact && (
-                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 font-mono text-xs font-semibold">
-                          <CheckCircle className="w-3.5 h-3.5" />
+                        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 font-mono text-xs font-bold">
+                          <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
                           <span>{project.impact}</span>
                         </div>
                       )}
 
                       {/* Capabilities */}
                       <div className="space-y-2 pt-2">
-                        <p className="text-xs text-editorial-dim">Key capabilities</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-editorial-muted">
+                        <p className="text-xs font-bold text-slate-200 uppercase tracking-wider font-mono">Key capabilities</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-sm text-slate-100 font-medium">
                           {project.keyCapabilities.slice(0, 4).map((cap, i) => (
-                            <div key={i} className="flex items-start gap-2">
-                              <span className="w-1.5 h-1.5 rounded-full bg-brand-electric/60 shrink-0 mt-1.5" />
-                              <span>{cap}</span>
+                            <div key={i} className="flex items-start gap-2 bg-white/[0.03] p-2 rounded-lg border border-white/10">
+                              <span className="w-2 h-2 rounded-full bg-brand-electric shrink-0 mt-1.5" />
+                              <span className="text-slate-100 font-medium text-xs sm:text-sm">{cap}</span>
                             </div>
                           ))}
                         </div>
@@ -184,11 +184,11 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                         </div>
                       ) : (
                         /* Interactive Architecture Pipeline Graph */
-                        <div className="p-6 rounded-2xl bg-[#0e101b] border border-white/10 space-y-4 font-mono">
-                          <div className="flex items-center justify-between text-xs text-editorial-dim border-b border-white/8 pb-3">
-                            <span className="flex items-center gap-1.5">
-                              <Layers className="w-3.5 h-3.5" />
-                              Architecture
+                        <div className="p-6 rounded-2xl bg-[#080a14] border border-white/15 space-y-4 font-mono shadow-inner">
+                          <div className="flex items-center justify-between text-xs text-slate-200 font-bold border-b border-white/12 pb-3">
+                            <span className="flex items-center gap-1.5 text-white">
+                              <Layers className="w-3.5 h-3.5 text-brand-electric" />
+                              ARCHITECTURE TOPOLOGY
                             </span>
                           </div>
 
@@ -196,15 +196,15 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                             {project.architectureNodes?.map((node, i) => (
                               <div
                                 key={i}
-                                className="p-2.5 rounded-lg bg-white/[0.03] border border-white/5 flex items-center justify-between group hover:border-brand-blue/30 transition-colors"
+                                className="p-2.5 rounded-lg bg-white/[0.05] border border-white/12 flex items-center justify-between group hover:border-brand-blue/50 transition-colors"
                               >
                                 <div className="flex items-center gap-2">
-                                  <span className="text-brand-electric font-bold text-[10px] px-1.5 py-0.2 rounded bg-brand-blue/10">
+                                  <span className="text-brand-electric font-bold text-[11px] px-2 py-0.5 rounded bg-brand-blue/20 border border-brand-blue/40">
                                     0{i + 1}
                                   </span>
-                                  <span className="text-white text-xs">{node}</span>
+                                  <span className="text-white font-bold text-xs">{node}</span>
                                 </div>
-                                <span className="text-editorial-dim text-[10px]">→</span>
+                                <span className="text-slate-300 font-bold text-xs">→</span>
                               </div>
                             ))}
                           </div>
@@ -214,11 +214,11 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
                   </div>
 
                   {/* Tech stack footer */}
-                  <div className="pt-5 border-t border-white/6 flex flex-wrap items-center justify-between gap-3">
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      <span className="text-xs text-editorial-dim mr-1">Stack:</span>
+                  <div className="pt-5 border-t border-white/12 flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <span className="text-xs font-bold text-slate-200 uppercase tracking-wider font-mono mr-1">Stack:</span>
                       {project.technologies.map(t => (
-                        <span key={t} className="px-2.5 py-1 rounded text-xs text-editorial-dim border border-white/6 bg-white/[0.02]">
+                        <span key={t} className="px-2.5 py-1 rounded text-xs font-semibold text-white border border-white/15 bg-white/10 shadow-sm">
                           {t}
                         </span>
                       ))}
@@ -226,7 +226,7 @@ export const SelectedWork: React.FC<SelectedWorkProps> = ({ onSelectProject }) =
 
                     <button
                       onClick={() => { soundFx.playBlip(850); onSelectProject(project.id); }}
-                      className="text-brand-electric/80 hover:text-white text-xs font-medium flex items-center gap-1 transition-colors"
+                      className="text-brand-electric hover:text-white text-xs font-bold flex items-center gap-1 transition-colors bg-brand-blue/10 px-3 py-1.5 rounded-lg border border-brand-blue/30"
                     >
                       Read case study
                       <ArrowRight className="w-3.5 h-3.5" />

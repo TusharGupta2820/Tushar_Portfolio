@@ -252,7 +252,7 @@ export const ScaleUp: React.FC<ScaleUpProps> = ({ children, delay = 0, className
 };
 
 // ─────────────────────────────────────────────────────────
-// FLOAT CARD — 3D perspective tilt on hover
+// FLOAT CARD — 3D perspective tilt & specular glare spotlight on hover
 // ─────────────────────────────────────────────────────────
 interface FloatCardProps {
   children: React.ReactNode;
@@ -263,14 +263,20 @@ interface FloatCardProps {
 export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', intensity = 6 }) => {
   const prefersReduced = useReducedMotion();
   const [tilt, setTilt] = React.useState({ x: 0, y: 0 });
+  const [glarePos, setGlarePos] = React.useState({ x: 50, y: 50 });
   const [isHovered, setIsHovered] = React.useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (prefersReduced) return;
     const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width - 0.5) * intensity;
-    const y = ((e.clientY - rect.top) / rect.height - 0.5) * -intensity;
+    const xPct = (e.clientX - rect.left) / rect.width;
+    const yPct = (e.clientY - rect.top) / rect.height;
+
+    const x = (xPct - 0.5) * intensity;
+    const y = (yPct - 0.5) * -intensity;
+
     setTilt({ x, y });
+    setGlarePos({ x: xPct * 100, y: yPct * 100 });
   };
 
   const handleMouseLeave = () => {
@@ -280,7 +286,7 @@ export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', 
 
   return (
     <motion.div
-      className={className}
+      className={`relative rounded-[inherit] ${className}`}
       style={{ transformStyle: 'preserve-3d', perspective: 1000 }}
       animate={{
         rotateX: tilt.y,
@@ -292,13 +298,21 @@ export const FloatCard: React.FC<FloatCardProps> = ({ children, className = '', 
       onMouseLeave={handleMouseLeave}
       onMouseEnter={() => setIsHovered(true)}
     >
+      {/* Dynamic Specular Spotlight Glare Overlay */}
+      <div
+        className="pointer-events-none absolute -inset-px transition-opacity duration-300 z-30 rounded-[inherit]"
+        style={{
+          opacity: isHovered ? 0.4 : 0,
+          background: `radial-gradient(600px circle at ${glarePos.x}% ${glarePos.y}%, rgba(59, 130, 246, 0.28), transparent 40%)`,
+        }}
+      />
       {children}
     </motion.div>
   );
 };
 
 // ─────────────────────────────────────────────────────────
-// SECTION TRANSITION — Full page wrapper
+// SECTION TRANSITION — 3D spatial flip/fade spring page wrapper
 // ─────────────────────────────────────────────────────────
 interface SectionTransitionProps {
   children: React.ReactNode;
@@ -310,10 +324,26 @@ export const SectionTransition: React.FC<SectionTransitionProps> = ({ children, 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, y: prefersReduced ? 0 : 15 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: prefersReduced ? 0 : -10 }}
-      transition={{ duration: 0.35, ease: ease.out }}
+      style={{ perspective: 1200, transformStyle: 'preserve-3d' }}
+      initial={{
+        opacity: 0,
+        y: prefersReduced ? 0 : 25,
+        rotateX: prefersReduced ? 0 : 4,
+        scale: prefersReduced ? 1 : 0.985,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        rotateX: 0,
+        scale: 1,
+      }}
+      exit={{
+        opacity: 0,
+        y: prefersReduced ? 0 : -15,
+        rotateX: prefersReduced ? 0 : -3,
+        scale: prefersReduced ? 1 : 0.985,
+      }}
+      transition={{ duration: 0.42, ease: ease.out }}
     >
       {children}
     </motion.div>
@@ -330,9 +360,10 @@ interface CounterProps {
 
 export const Counter: React.FC<CounterProps> = ({ value, className = '' }) => {
   const [inView, setInView] = React.useState(false);
-  const num = parseFloat(value.replace(/[^0-9.]/g, ''));
-  const suffix = value.replace(/[0-9.]/g, '');
-  const [display, setDisplay] = React.useState('0');
+  const isRange = value.includes('-') || value.includes('—') || value.includes('–');
+  const num = isRange ? NaN : parseFloat(value.replace(/[^0-9.]/g, ''));
+  const suffix = isRange ? '' : value.replace(/[0-9.]/g, '');
+  const [display, setDisplay] = React.useState(value);
 
   React.useEffect(() => {
     if (!inView || isNaN(num)) {
